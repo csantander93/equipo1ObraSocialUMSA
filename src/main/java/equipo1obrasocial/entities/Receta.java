@@ -1,14 +1,15 @@
 package equipo1obrasocial.entities;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente {
+public class Receta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,27 +30,22 @@ public class Paciente {
 	private long id;
 	
 	@Column
-	private String nombre;
-	
-	
-	@Column
-	private String apellido;
-	
-	
-	@Column(unique = true)
-	private String dni;
-	
+	private String clinica;
 	
 	@Column
-	private String num_afiliado;
-	
+	private LocalDate fecha;
 	
 	@Column
-	private LocalDate fecha_nac;
+	private String diagnostico;
 	
-	@OneToMany(mappedBy = "paciente")
-	private List<Turno> turnos;
+	@Column
+	private String tratamiento;
 	
-	@OneToMany(mappedBy = "paciente")
-	private List<Receta> recetas;
+	@ManyToOne
+	@JoinColumn(name = "id_paciente")
+	private Paciente paciente;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_medico")
+	private Medico medico;
 }

@@ -1,6 +1,5 @@
 package equipo1obrasocial.entities;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -21,35 +20,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente {
+public class Especialidad {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
-	private long id;
+	private int id;
 	
 	@Column
-	private String nombre;
+	private String nombre_especialidad;
 	
-	
-	@Column
-	private String apellido;
-	
-	
-	@Column(unique = true)
-	private String dni;
-	
-	
-	@Column
-	private String num_afiliado;
-	
-	
-	@Column
-	private LocalDate fecha_nac;
-	
-	@OneToMany(mappedBy = "paciente")
-	private List<Turno> turnos;
-	
-	@OneToMany(mappedBy = "paciente")
-	private List<Receta> recetas;
+	@OneToMany(mappedBy = "especialidad")
+	private List<Medico> medicos;
 }

@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +23,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente {
+
+public class Medico {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,25 +34,23 @@ public class Paciente {
 	@Column
 	private String nombre;
 	
-	
 	@Column
 	private String apellido;
 	
-	
-	@Column(unique = true)
-	private String dni;
-	
-	
 	@Column
-	private String num_afiliado;
+	private String matricula;
 	
-	
-	@Column
-	private LocalDate fecha_nac;
-	
-	@OneToMany(mappedBy = "paciente")
+	@OneToMany(mappedBy = "medico")
 	private List<Turno> turnos;
 	
-	@OneToMany(mappedBy = "paciente")
+	@OneToMany(mappedBy = "medico")
 	private List<Receta> recetas;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_especialidad") 
+	private Especialidad especialidad;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_clinica")
+	private Clinica clinica;
 }
