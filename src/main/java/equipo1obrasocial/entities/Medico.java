@@ -1,8 +1,9 @@
 package equipo1obrasocial.entities;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,11 +25,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 
-public class Medico {
+public class Medico extends PanacheEntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(name="id_medico")
 	private long id;
 	
 	@Column
@@ -41,10 +42,10 @@ public class Medico {
 	private String matricula;
 	
 	@OneToMany(mappedBy = "medico")
-	private List<Turno> turnos;
+	private Set<Turno> turnos;
 	
 	@OneToMany(mappedBy = "medico")
-	private List<Receta> recetas;
+	private Set<Receta> recetas;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_especialidad") 
