@@ -1,5 +1,6 @@
 package equipo1obrasocial.entities;
 
+import java.sql.Time;
 import java.util.Set;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -40,6 +41,12 @@ public class Medico extends PanacheEntityBase {
 	
 	@Column
 	private String matricula;
+	
+	@Column
+	private Time atencionDesde;
+	
+	@Column
+	private Time atencionHasta;
 	
 	@OneToMany(mappedBy = "medico")
 	private Set<Turno> turnos;
