@@ -21,7 +21,7 @@ public class EspecialidadController {
 
 	@POST
 	@Path("/crearEspecialidad/{nombre}")
-	public ResponseEntity<Object> altaDocente(@PathParam("nombre") String nombre) {
+	public ResponseEntity<Object> altaEspecialidad(@PathParam("nombre") String nombre) {
 	    try {
 	        especialidadService.crearEspecialidad(nombre);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Especialidad creada exitosamente"));
