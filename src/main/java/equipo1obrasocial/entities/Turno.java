@@ -1,5 +1,7 @@
 package equipo1obrasocial.entities;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -33,7 +35,6 @@ public class Turno extends PanacheEntityBase {
 	@Column
 	private LocalDateTime fecha_hora;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "id_paciente")
 	private Paciente paciente;
