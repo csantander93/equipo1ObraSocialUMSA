@@ -1,8 +1,10 @@
 package equipo1obrasocial.entities;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,11 +23,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente {
+public class Paciente extends PanacheEntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(name="id_paciente")
 	private long id;
 	
 	@Column
@@ -48,8 +50,8 @@ public class Paciente {
 	private LocalDate fecha_nac;
 	
 	@OneToMany(mappedBy = "paciente")
-	private List<Turno> turnos;
+	private Set<Turno> turnos;
 	
 	@OneToMany(mappedBy = "paciente")
-	private List<Receta> recetas;
+	private Set<Receta> recetas;
 }
