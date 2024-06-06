@@ -15,4 +15,7 @@ public class PacienteRepository implements PanacheRepository <Paciente>{
 		return find("dni",dni).firstResult();
 	}
 
+	public Paciente findByNumAfiliado(String num_afiliado) {
+		return find("num_afiliado",num_afiliado).firstResult();
+	}
 }

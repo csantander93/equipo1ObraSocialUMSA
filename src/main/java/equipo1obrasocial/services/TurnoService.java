@@ -55,7 +55,11 @@ public class TurnoService implements ITurnoService {
 		
 		turno.setFecha_hora(dto.getFecha_hora());
 		turno.setMotivoConsulta(dto.getMotivoConsulta());
+<<<<<<< HEAD
 		turno.setActivo(true);		
+=======
+		turno.setActivo(true);
+>>>>>>> rama-julian
 		turnoRepository.persist(turno);
 		
 		return true;
