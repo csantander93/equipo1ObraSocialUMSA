@@ -2,7 +2,6 @@ package equipo1obrasocial.entities;
 
 import java.time.LocalDate;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,4 +49,9 @@ public class Receta extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "id_medico")
 	private Medico medico;
+	
+    @OneToOne
+    @JoinColumn(name = "id_turno")
+    private Turno turno;
+	
 }
