@@ -1,6 +1,9 @@
 package equipo1obrasocial.entities;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> rama-julian
 import java.time.LocalDateTime;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -45,7 +48,13 @@ public class Turno extends PanacheEntityBase {
 	@JoinColumn(name = "id_medico")
 	private Medico medico;
 	
+<<<<<<< HEAD
     @OneToOne
     @JoinColumn(name = "id_receta")
     private Receta receta;
+=======
+	@OneToOne
+	@JoinColumn(name = "id_receta")
+	private Receta receta;
+>>>>>>> rama-julian
 }

@@ -50,8 +50,14 @@ public class Receta extends PanacheEntityBase {
 	@JoinColumn(name = "id_medico")
 	private Medico medico;
 	
+<<<<<<< HEAD
     @OneToOne
     @JoinColumn(name = "id_turno")
     private Turno turno;
 	
+=======
+	@OneToOne
+	@JoinColumn(name = "id_turno")
+	private Turno turno;
+>>>>>>> rama-julian
 }
