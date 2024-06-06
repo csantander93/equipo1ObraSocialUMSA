@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import equipo1obrasocial.converters.MedicoConverter;
 import equipo1obrasocial.dtos.response.MedicoDTOResponse;
 import equipo1obrasocial.entities.Clinica;
 import equipo1obrasocial.entities.Especialidad;
@@ -73,37 +74,14 @@ public class MedicoService implements IMedicoService {
 	}
 
 	@Override
-	public List<MedicoDTOResponse> getCartilla() throws Exception {
+    public List<MedicoDTOResponse> getCartilla() throws Exception {
 
-		List<Medico> medicos = medicoRepository.findAll().list();
-		
-		if(medicos.isEmpty()) {
-			
-			throw new Exception("No hay médicos que mostrar.");
-		}
-		
-        List<MedicoDTOResponse> dtos = new ArrayList<>();
+        List<Medico> medicos = medicoRepository.findAll().list();
         
-        for (Medico medico : medicos) {
-            
-        	MedicoDTOResponse dto = new MedicoDTOResponse();
-        	
-        	String nombreMedico = medico.getNombre().concat(" " + medico.getApellido());
-        	
-        	dto.setNombreMedico(nombreMedico);
-        	
-        	dto.setNombreEspecialidad(medico.getEspecialidad().getNombreEspecialidad());
-        	
-        	dto.setUbicacionConsulta(medico.getClinica().getDireccion());
-        	
-        	dto.setAtencionDesde(medico.getAtencionDesde());
-        	
-        	dto.setAtencionHasta(medico.getAtencionHasta());
-        	
-        	dtos.add(dto);
+        if (medicos.isEmpty()) {
+            throw new Exception("No hay médicos que mostrar.");
         }
 
-        return dtos;
-	}
-
+        return MedicoConverter.convertToDTOList(medicos);
+    }
 }
