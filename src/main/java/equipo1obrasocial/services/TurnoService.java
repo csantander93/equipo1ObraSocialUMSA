@@ -2,6 +2,7 @@ package equipo1obrasocial.services;
 
 import java.time.LocalTime;
 
+import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
@@ -33,11 +34,6 @@ public class TurnoService implements ITurnoService {
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
 		
-		Turno turno = new Turno();
-		
-		turno.setMedico(medico);
-		turno.setPaciente(paciente);
-		
 		LocalTime horaDelTurno = dto.getFecha_hora().toLocalTime();
 		
 		if( (horaDelTurno.isAfter(medico.getAtencionDesde()) || horaDelTurno.equals(medico.getAtencionDesde()))  && 
@@ -53,9 +49,7 @@ public class TurnoService implements ITurnoService {
 			throw new Exception ("El medico no atiende en el horario indicado");
 		}
 		
-		turno.setFecha_hora(dto.getFecha_hora());
-		turno.setMotivoConsulta(dto.getMotivoConsulta());
-		turno.setActivo(true);		
+		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);		
 
 		turnoRepository.persist(turno);
 		
