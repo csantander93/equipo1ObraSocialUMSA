@@ -21,7 +21,7 @@ public class TurnoController {
 	
 	@POST
 	@Path("/crearTurno")
-    public ResponseEntity<Object> altaDocentes(@RequestBody TurnoDTOMedicoPaciente dto){
+    public ResponseEntity<Object> altaTurno(@RequestBody TurnoDTOMedicoPaciente dto){
         try{
         	turnoService.crearTurno(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));

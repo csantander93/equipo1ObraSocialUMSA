@@ -1,7 +1,10 @@
 package equipo1obrasocial.services;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import equipo1obrasocial.dtos.response.MedicoDTOResponse;
 import equipo1obrasocial.entities.Clinica;
 import equipo1obrasocial.entities.Especialidad;
 import equipo1obrasocial.entities.Medico;
@@ -67,6 +70,40 @@ public class MedicoService implements IMedicoService {
 		medicoRepository.persist(medico);
 		
 		return true;
+	}
+
+	@Override
+	public List<MedicoDTOResponse> getCartilla() throws Exception {
+
+		List<Medico> medicos = medicoRepository.findAll().list();
+		
+		if(medicos.isEmpty()) {
+			
+			throw new Exception("No hay médicos que mostrar.");
+		}
+		
+        List<MedicoDTOResponse> dtos = new ArrayList<>();
+        
+        for (Medico medico : medicos) {
+            
+        	MedicoDTOResponse dto = new MedicoDTOResponse();
+        	
+        	String nombreMedico = medico.getNombre().concat(" " + medico.getApellido());
+        	
+        	dto.setNombreMedico(nombreMedico);
+        	
+        	dto.setNombreEspecialidad(medico.getEspecialidad().getNombreEspecialidad());
+        	
+        	dto.setUbicacionConsulta(medico.getClinica().getDireccion());
+        	
+        	dto.setAtencionDesde(medico.getAtencionDesde());
+        	
+        	dto.setAtencionHasta(medico.getAtencionHasta());
+        	
+        	dtos.add(dto);
+        }
+
+        return dtos;
 	}
 
 }
