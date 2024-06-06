@@ -1,6 +1,7 @@
 package equipo1obrasocial.controllers;
 
-import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +18,24 @@ import jakarta.ws.rs.PathParam;
 @RequestScoped
 public class MedicoController {
 
-	@Inject
-	private IMedicoService medicoService;
-	
-	@POST
-	@Path("/crearMedico/{nombre}/{apellido}/{matricula}/{atencionDesde}/{atencionHasta}/{especialidad}/{idClinica}")
-	public ResponseEntity<Object> altaMedico(@PathParam("nombre") String nombre, @PathParam("apellido") String apellido, @PathParam("matricula") String matricula,
-			@PathParam("atencionDesde") Time atencionDesde, @PathParam("atencionHasta") Time atencionHasta, @PathParam("especialidad") String especialidad, 
-			@PathParam("idClinica") long idClinica) {
-	    try {
-	        medicoService.crearMedico(nombre,apellido,matricula,atencionDesde,atencionHasta,especialidad,idClinica);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Medico creado exitosamente"));
-	    } catch(Exception e) {
-	        return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
-	    }
-	}
+    @Inject
+    private IMedicoService medicoService;
+
+    @POST
+    @Path("/crearMedico/{nombre}/{apellido}/{matricula}/{atencionDesde}/{atencionHasta}/{especialidad}/{idClinica}")
+    public ResponseEntity<Object> altaMedico(@PathParam("nombre") String nombre, @PathParam("apellido") String apellido, 
+                                             @PathParam("matricula") String matricula, @PathParam("atencionDesde") String atencionDesdeStr, 
+                                             @PathParam("atencionHasta") String atencionHastaStr, @PathParam("especialidad") String especialidad, 
+                                             @PathParam("idClinica") long idClinica) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_TIME;
+            LocalTime atencionDesde = LocalTime.parse(atencionDesdeStr, formatter);
+            LocalTime atencionHasta = LocalTime.parse(atencionHastaStr, formatter);
+
+            medicoService.crearMedico(nombre, apellido, matricula, atencionDesde, atencionHasta, especialidad, idClinica);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Medico creado exitosamente"));
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

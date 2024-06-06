@@ -1,6 +1,6 @@
 package equipo1obrasocial.services;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 import equipo1obrasocial.entities.Clinica;
 import equipo1obrasocial.entities.Especialidad;
@@ -26,7 +26,7 @@ public class MedicoService implements IMedicoService {
 
 	@Override
 	@Transactional
-	public boolean crearMedico(String nombre, String apellido, String matricula, Time atencionDesde, Time atencionHasta,
+	public boolean crearMedico(String nombre, String apellido, String matricula, LocalTime atencionDesde, LocalTime atencionHasta,
 			String nombreEspecialidad, long idClinica) throws Exception {
 		
 		Especialidad especialidad = especialidadRepository.findByNombre(nombreEspecialidad);
