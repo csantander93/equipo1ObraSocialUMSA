@@ -16,5 +16,13 @@ public class TurnoConverter {
         turno.setActivo(true);
         return turno;
     }
+    
+    public static Turno convertToEntity(TurnoDTOMedicoPaciente dto) {
+        Turno turno = new Turno();
+        turno.setFecha_hora(dto.getFecha_hora());
+        turno.setMotivoConsulta(dto.getMotivoConsulta());
+        turno.setActivo(true);
+        return turno;
+    }
 
 }
