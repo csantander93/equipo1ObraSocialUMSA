@@ -3,6 +3,7 @@ package equipo1obrasocial.services;
 import java.time.LocalTime;
 
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
+import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Turno;
@@ -62,4 +63,21 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
+	@Override
+	@Transactional
+	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
+		
+		Turno turno = turnoRepository.findById(dto.getIdTurno());
+	    
+	    if (turno == null) {
+	        throw new Exception("El turno no existe");
+	    }
+	    
+	    //al cambiar el estado de activo nos indica que el turno se liberó
+	    turno.setActivo(false); 
+	    
+	    turnoRepository.persist(turno);
+	    
+	    return true;
+	}
 }
