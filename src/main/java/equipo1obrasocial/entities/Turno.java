@@ -40,6 +40,9 @@ public class Turno extends PanacheEntityBase {
 	@Column
 	private String motivoConsulta;
 	
+	@Column
+	private boolean activo;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_medico")
 	private Medico medico;
