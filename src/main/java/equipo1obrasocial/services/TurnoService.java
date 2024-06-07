@@ -52,13 +52,14 @@ public class TurnoService implements ITurnoService {
 			throw new Exception ("El medico no atiende en el horario indicado");
 		}
 		
-		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);		
-
+		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);
+		
 		turnoRepository.persist(turno);
 		
 		return true;
 	}
 
+<<<<<<< HEAD
 
 	@Override
 	@Transactional
@@ -94,6 +95,8 @@ public class TurnoService implements ITurnoService {
     
 	}
 
+=======
+>>>>>>> rama_cris
 	 @Override
 	 @Transactional
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception {
@@ -133,6 +136,7 @@ public class TurnoService implements ITurnoService {
 	        return true;
 	    }
 
+<<<<<<< HEAD
 
 	@Override
 	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
@@ -141,4 +145,21 @@ public class TurnoService implements ITurnoService {
 	}
 
 
+=======
+	@Override
+	@Transactional
+	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
+		
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new Exception("El turno no existe");
+        }
+
+        turnoRepository.delete(turno);
+        return true;
+        
+	}
+
+>>>>>>> rama_cris
 }

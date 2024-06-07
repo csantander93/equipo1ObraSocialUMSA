@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 
 import equipo1obrasocial.services.IPacienteService;
 import equipo1obrasocial.util.Mensaje;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
@@ -16,6 +20,7 @@ import jakarta.ws.rs.PathParam;
 
 @Path("/paciente")
 @RequestScoped
+@Api(tags = "Paciente Controller", description = "Operaciones relacionadas con la gestión de pacientes")
 public class PacienteController {
 
     @Inject
@@ -23,6 +28,11 @@ public class PacienteController {
     
     @POST
     @Path("/crearPaciente/{nombre}/{apellido}/{dni}/{num_afiliado}/{fecha_nac}")
+    @ApiOperation(value = "Crear un nuevo paciente", notes = "Crea un nuevo paciente con la información especificada")
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Paciente creado exitosamente"),
+        @ApiResponse(code = 400, message = "Error al crear el paciente")
+    })
     public ResponseEntity<Object> altaPaciente(
             @PathParam("nombre") String nombre,
             @PathParam("apellido") String apellido,
