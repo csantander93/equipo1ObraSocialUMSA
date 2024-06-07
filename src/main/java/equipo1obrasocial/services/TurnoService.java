@@ -67,17 +67,24 @@ public class TurnoService implements ITurnoService {
 	@Transactional
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
 		
-		Turno turno = turnoRepository.findById(dto.getIdTurno());
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new Exception("El turno no existe");
+        }
+
+        // Eliminar ??
+        turnoRepository.delete(turno);
+        return true;
 	    
-	    if (turno == null) {
-	        throw new Exception("El turno no existe");
-	    }
-	    
-	    //al cambiar el estado de activo nos indica que el turno se liberó
+        // o cambiar estado?? actualizar?
+	    /** 
 	    turno.setActivo(false); 
-	    
 	    turnoRepository.persist(turno);
-	    
 	    return true;
+	    **/
+	    
+	    
+        
 	}
 }
