@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
+import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.services.ITurnoService;
 import equipo1obrasocial.util.Mensaje;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -32,12 +34,21 @@ public class TurnoController {
         }
     }
 	
+<<<<<<< HEAD
 	@PUT
 	@Path("/actualizarTurno")
     public ResponseEntity<Object> actualizarTurno(@RequestBody TurnoActualizarDTORequest dto){
         try{
         	turnoService.actualizarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se actualizo exitosamente"));
+=======
+	@DELETE
+	@Path("/eliminarTurno")
+    public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
+        try{
+        	turnoService.eliminarTurno(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se eliminó el turno exitosamente del dia "+dto.getFecha_hora()));
+>>>>>>> rama_celina
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
