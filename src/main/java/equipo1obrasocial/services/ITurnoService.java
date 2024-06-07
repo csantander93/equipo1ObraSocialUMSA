@@ -8,4 +8,6 @@ public interface ITurnoService {
 	public boolean crearTurno(TurnoDTOMedicoPaciente dto) throws Exception;
 
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception;
+
+	boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception;
 }

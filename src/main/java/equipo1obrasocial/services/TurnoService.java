@@ -82,9 +82,25 @@ public class TurnoService implements ITurnoService {
 	    turno.setActivo(false); 
 	    turnoRepository.persist(turno);
 	    return true;
-	    **/
-	    
-	    
-        
+	    **/      
+	}
+	
+	@Override
+	@Transactional
+	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
+		
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new Exception("El turno no existe");
+        }
+
+	    turno.setActivo(false); 
+	    turno.setMotivoConsulta("");
+	    turno.setPaciente(null);
+	    turno.setReceta(null);
+	    turnoRepository.persist(turno);
+	    return true;
+    
 	}
 }
