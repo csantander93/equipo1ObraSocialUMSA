@@ -58,7 +58,6 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
-<<<<<<< HEAD
 	 @Override
 	 @Transactional
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception {
@@ -98,7 +97,6 @@ public class TurnoService implements ITurnoService {
 	        return true;
 	    }
 
-=======
 	@Override
 	@Transactional
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
@@ -109,19 +107,9 @@ public class TurnoService implements ITurnoService {
             throw new Exception("El turno no existe");
         }
 
-        // Eliminar ??
         turnoRepository.delete(turno);
         return true;
-	    
-        // o cambiar estado?? actualizar?
-	    /** 
-	    turno.setActivo(false); 
-	    turnoRepository.persist(turno);
-	    return true;
-	    **/
-	    
-	    
         
 	}
->>>>>>> rama_celina
+
 }
