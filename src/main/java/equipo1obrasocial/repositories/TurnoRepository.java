@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class TurnoRepository implements PanacheRepository<Turno> {
 	
     public Turno findById(long id) {
-        return find("id_turno", id).firstResult();
+        return find("id", id).firstResult();
     }
 
 }

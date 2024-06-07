@@ -2,6 +2,8 @@ package equipo1obrasocial.services;
 
 import java.time.LocalTime;
 
+import equipo1obrasocial.converters.TurnoConverter;
+import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
@@ -34,11 +36,6 @@ public class TurnoService implements ITurnoService {
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
 		
-		Turno turno = new Turno();
-		
-		turno.setMedico(medico);
-		turno.setPaciente(paciente);
-		
 		LocalTime horaDelTurno = dto.getFecha_hora().toLocalTime();
 		
 		if( (horaDelTurno.isAfter(medico.getAtencionDesde()) || horaDelTurno.equals(medico.getAtencionDesde()))  && 
@@ -54,15 +51,14 @@ public class TurnoService implements ITurnoService {
 			throw new Exception ("El medico no atiende en el horario indicado");
 		}
 		
-		turno.setFecha_hora(dto.getFecha_hora());
-		turno.setMotivoConsulta(dto.getMotivoConsulta());
-		turno.setActivo(true);		
+		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);		
 
 		turnoRepository.persist(turno);
 		
 		return true;
 	}
 
+<<<<<<< HEAD
 	@Override
 	@Transactional
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
@@ -103,4 +99,45 @@ public class TurnoService implements ITurnoService {
 	    return true;
     
 	}
+=======
+	 @Override
+	 @Transactional
+	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception {
+	        Turno turno = turnoRepository.findById(dto.getIdTurno());
+	        
+	        System.out.println(turno);
+	        
+	        if (turno == null) {
+	            throw new Exception("El turno no existe");
+	        }
+
+	        Medico medicoNuevo = medicoRepository.findById(dto.getIdMedicoNuevo());
+	        if (medicoNuevo == null) {
+	            throw new Exception("El nuevo médico no existe");
+	        }
+
+	        LocalTime horaNuevaTurno = dto.getFechaHoraNueva().toLocalTime();
+
+	        if ((horaNuevaTurno.isAfter(medicoNuevo.getAtencionDesde()) || horaNuevaTurno.equals(medicoNuevo.getAtencionHasta())) &&
+	            (horaNuevaTurno.isBefore(medicoNuevo.getAtencionHasta()) || horaNuevaTurno.equals(medicoNuevo.getAtencionHasta()))) {
+
+	            for (Turno t : medicoNuevo.getTurnos()) {
+	                if (t.getFecha_hora().equals(dto.getFechaHoraNueva())) {
+	                    throw new Exception("El horario que estas queriendo crear un turno se encuentra ocupado");
+	                }
+	            }    
+	        } else {
+	            throw new Exception("El medico no atiende en el horario indicado");
+	        }
+
+	        turno.setMedico(medicoNuevo);
+	        turno.setFecha_hora(dto.getFechaHoraNueva());
+	        turno.setMotivoConsulta(dto.getNuevoMotivoConsulta());
+	        
+	        turnoRepository.persist(turno);
+	        
+	        return true;
+	    }
+
+>>>>>>> dev
 }
