@@ -44,20 +44,6 @@ public class TurnoController {
         }
     }
 	
-
-<<<<<<< HEAD
-	@DELETE
-	@Path("/eliminarTurno")
-    public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
-        try{
-        	turnoService.eliminarTurno(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se eliminó el turno exitosamente"));
-
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
-    } 
-	
 	@DELETE
 	@Path("/darBajaTurno")
     public ResponseEntity<Object> darBajaTurno(@RequestBody TurnoEliminarDTORequest dto){
@@ -70,8 +56,6 @@ public class TurnoController {
         }
     } 
 	
-=======
->>>>>>> rama_cris
 	@PUT
 	@Path("/actualizarTurno")
     @ApiOperation(value = "Actualizar un turno existente", notes = "Actualiza la información de un turno existente")
@@ -83,8 +67,7 @@ public class TurnoController {
         try{
         	turnoService.actualizarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se actualizo exitosamente"));
-<<<<<<< HEAD
-=======
+
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
@@ -101,7 +84,7 @@ public class TurnoController {
         try{
         	turnoService.eliminarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Se eliminó el turno exitosamente"));
->>>>>>> rama_cris
+
 
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);

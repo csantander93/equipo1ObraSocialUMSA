@@ -2,7 +2,6 @@ package equipo1obrasocial.services;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
-import equipo1obrasocial.dtos.request.TurnoDarBajaDTORequest;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 
 public interface ITurnoService {
@@ -13,5 +12,4 @@ public interface ITurnoService {
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception;
 
 	boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception;
-	boolean darBajaTurno(TurnoDarBajaDTORequest dto) throws Exception;
 }

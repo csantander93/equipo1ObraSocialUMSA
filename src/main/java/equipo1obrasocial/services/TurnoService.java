@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
-import equipo1obrasocial.dtos.request.TurnoDarBajaDTORequest;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
@@ -59,8 +58,6 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
-<<<<<<< HEAD
-
 	@Override
 	@Transactional
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
@@ -78,7 +75,7 @@ public class TurnoService implements ITurnoService {
 	
 	@Override
 	@Transactional
-	public boolean darBajaTurno(TurnoDarBajaDTORequest dto) throws Exception {
+	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
 		
         Turno turno = turnoRepository.findById(dto.getIdTurno());
 
@@ -95,8 +92,6 @@ public class TurnoService implements ITurnoService {
     
 	}
 
-=======
->>>>>>> rama_cris
 	 @Override
 	 @Transactional
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception {
@@ -136,30 +131,4 @@ public class TurnoService implements ITurnoService {
 	        return true;
 	    }
 
-<<<<<<< HEAD
-
-	@Override
-	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-=======
-	@Override
-	@Transactional
-	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
-		
-        Turno turno = turnoRepository.findById(dto.getIdTurno());
-
-        if (turno == null) {
-            throw new Exception("El turno no existe");
-        }
-
-        turnoRepository.delete(turno);
-        return true;
-        
-	}
-
->>>>>>> rama_cris
 }

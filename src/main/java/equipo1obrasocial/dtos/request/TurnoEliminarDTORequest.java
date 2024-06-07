@@ -12,8 +12,5 @@ import lombok.Setter;
 public class TurnoEliminarDTORequest {
 
 	private long idTurno;
-<<<<<<< HEAD
-=======
 
->>>>>>> rama_cris
 }
