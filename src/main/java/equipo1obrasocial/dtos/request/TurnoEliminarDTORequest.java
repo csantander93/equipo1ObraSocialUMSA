@@ -14,5 +14,4 @@ import lombok.Setter;
 public class TurnoEliminarDTORequest {
 
 	private long idTurno;
-	private LocalDateTime fecha_hora;
 }

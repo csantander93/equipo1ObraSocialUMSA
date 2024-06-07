@@ -34,21 +34,38 @@ public class TurnoController {
         }
     }
 	
-<<<<<<< HEAD
+
 	@DELETE
 	@Path("/eliminarTurno")
     public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
         try{
         	turnoService.eliminarTurno(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se eliminó el turno exitosamente del dia "+dto.getFecha_hora()));
-=======
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se eliminó el turno exitosamente"));
+
+        }catch(Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    } 
+	
+	@DELETE
+	@Path("/darBajaTurno")
+    public ResponseEntity<Object> darBajaTurno(@RequestBody TurnoEliminarDTORequest dto){
+        try{
+        	turnoService.darBajaTurno(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se liberó el turno exitosamente"));
+
+        }catch(Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    } 
+	
 	@PUT
 	@Path("/actualizarTurno")
     public ResponseEntity<Object> actualizarTurno(@RequestBody TurnoActualizarDTORequest dto){
         try{
         	turnoService.actualizarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se actualizo exitosamente"));
->>>>>>> dev
+
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
         }
