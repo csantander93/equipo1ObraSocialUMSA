@@ -50,8 +50,8 @@ public class TurnoService implements ITurnoService {
 			throw new Exception ("El medico no atiende en el horario indicado");
 		}
 		
-		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);		
-
+		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);
+		
 		turnoRepository.persist(turno);
 		
 		return true;

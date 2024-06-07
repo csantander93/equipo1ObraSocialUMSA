@@ -10,5 +10,6 @@ public class TurnoRepository implements PanacheRepository<Turno> {
     public Turno findById(long id) {
         return find("id", id).firstResult();
     }
-
+    
+    
 }
