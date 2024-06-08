@@ -1,4 +1,4 @@
-package equipo1obrasocial.services;
+package equipo1obrasocial.services.implementations;
 
 import java.time.LocalTime;
 
@@ -12,6 +12,7 @@ import equipo1obrasocial.entities.Turno;
 import equipo1obrasocial.repositories.MedicoRepository;
 import equipo1obrasocial.repositories.PacienteRepository;
 import equipo1obrasocial.repositories.TurnoRepository;
+import equipo1obrasocial.services.ITurnoService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
