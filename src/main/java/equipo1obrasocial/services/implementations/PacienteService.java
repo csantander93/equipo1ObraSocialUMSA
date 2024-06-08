@@ -1,9 +1,10 @@
-package equipo1obrasocial.services;
+package equipo1obrasocial.services.implementations;
 
 import java.time.LocalDate;
 
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.repositories.PacienteRepository;
+import equipo1obrasocial.services.IPacienteService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

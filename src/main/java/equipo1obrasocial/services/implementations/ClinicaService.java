@@ -1,7 +1,8 @@
-package equipo1obrasocial.services;
+package equipo1obrasocial.services.implementations;
 
 import equipo1obrasocial.entities.Clinica;
 import equipo1obrasocial.repositories.ClinicaRepository;
+import equipo1obrasocial.services.IClinicaService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

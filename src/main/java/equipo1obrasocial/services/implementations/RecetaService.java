@@ -1,4 +1,4 @@
-package equipo1obrasocial.services;
+package equipo1obrasocial.services.implementations;
 
 import equipo1obrasocial.converters.RecetaConverter;
 import equipo1obrasocial.dtos.request.RecetaDTORequest;
@@ -11,6 +11,7 @@ import equipo1obrasocial.repositories.MedicoRepository;
 import equipo1obrasocial.repositories.PacienteRepository;
 import equipo1obrasocial.repositories.RecetaRepository;
 import equipo1obrasocial.repositories.TurnoRepository;
+import equipo1obrasocial.services.IRecetaService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
