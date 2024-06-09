@@ -1,4 +1,11 @@
 # Proyecto Backend - Sistema Integral de Obra Social para AlMedin
+<p>
+  <h1 align="center"><b>EQUIPO 1</b></h1>
+</p>
+
+<a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=csantander93/equipo1ObraSocialUMSA" />
+</a>
 
 ## Descripción del Proyecto
 
@@ -72,9 +79,11 @@ La aplicación permitirá las siguientes operaciones:
 5. **Acceder a la documentación de la API**:
    Una vez que la aplicación esté en funcionamiento, puedes acceder a la documentación de Swagger en http://localhost:8080/swagger-ui.
 
-Si tenes alguna pregunta o necesitas ayuda adicional, no dudes en abrir un issue en el repositorio. ¡Gracias por tu colaboración!
+<p>
+  <h2><b>Si tenes alguna pregunta o necesitas ayuda adicional, no dudes en abrir un issue en el repositorio. ¡Gracias por tu colaboración! 👋👋👋</b></h2>
+</p> 
    
-# equipo1obrasocial
+-------------------------------------------------------------------------------
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
