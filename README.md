@@ -1,7 +1,8 @@
 # Proyecto Backend - Sistema Integral de Obra Social para AlMedin
 <p>
-  <h1 align="center"><b>EQUIPO 1</b></h1>
+  <h1 ><b>EQUIPO 1</b></h1>
 </p>
+
 
 <a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=csantander93/equipo1ObraSocialUMSA" />
