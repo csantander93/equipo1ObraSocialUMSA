@@ -1,11 +1,19 @@
 # Proyecto Backend - Sistema Integral de Obra Social para AlMedin
 <p>
-  <h1 align="center"><b>EQUIPO 1</b></h1>
+  <h1 ><b>EQUIPO 1</b></h1>
 </p>
+
 
 <a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=csantander93/equipo1ObraSocialUMSA" />
 </a>
+<a href="https://github.com/celinalopez/equipo1ObraSocialUMSA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=celinalopez/Egg" />
+</a>
+<a href="https://github.com/juliancolman/equipo1ObraSocialUMSA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=juliancolman/recetas" />
+</a>
+
 
 ## Descripción del Proyecto
 
@@ -78,6 +86,7 @@ La aplicación permitirá las siguientes operaciones:
 
 5. **Acceder a la documentación de la API**:
    Una vez que la aplicación esté en funcionamiento, puedes acceder a la documentación de Swagger en http://localhost:8080/swagger-ui.
+   Ademas en el directorio raiz del proyecto se encuentra la carpeta "img" con screenshots asociadas al proyecto.
 
 <p>
   <h2><b>Si tenes alguna pregunta o necesitas ayuda adicional, no dudes en abrir un issue en el repositorio. ¡Gracias por tu colaboración! 👋👋👋</b></h2>
