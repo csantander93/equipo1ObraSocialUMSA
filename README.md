@@ -7,10 +7,10 @@
 <a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=csantander93/equipo1ObraSocialUMSA" />
 </a>
-<a href="https://github.com/celinalopez/equipo1ObraSocialUMSA/graphs/contributors">
+<a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=celinalopez/Egg" />
 </a>
-<a href="https://github.com/juliancolman/equipo1ObraSocialUMSA/graphs/contributors">
+<a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=juliancolman/recetas" />
 </a>
 
