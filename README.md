@@ -3,9 +3,7 @@
   <h1 align="center"><b>EQUIPO 1</b></h1>
 </p>
 
-<a href="https://github.com/csantander93/equipo1ObraSocialUMSA/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=csantander93/equipo1ObraSocialUMSA" />
-</a>
+
 
 ## Descripción del Proyecto
 
