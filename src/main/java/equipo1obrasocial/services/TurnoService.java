@@ -106,7 +106,7 @@ public class TurnoService implements ITurnoService {
         if (turno == null) {
             throw new Exception("El turno no existe");
         }
-
+       
         turnoRepository.delete(turno);
         return true;
         
