@@ -1,4 +1,4 @@
-package equipo1obrasocial.services;
+package equipo1obrasocial.services.implementations;
 
 import java.time.LocalTime;
 
@@ -12,6 +12,7 @@ import equipo1obrasocial.entities.Turno;
 import equipo1obrasocial.repositories.MedicoRepository;
 import equipo1obrasocial.repositories.PacienteRepository;
 import equipo1obrasocial.repositories.TurnoRepository;
+import equipo1obrasocial.services.ITurnoService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -56,6 +57,26 @@ public class TurnoService implements ITurnoService {
 		turnoRepository.persist(turno);
 		
 		return true;
+	}
+
+	
+	@Override
+	@Transactional
+	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
+		
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new Exception("El turno no existe");
+        }
+
+	    turno.setActivo(false); 
+	    turno.setMotivoConsulta("");
+	    turno.setPaciente(null);
+	    turno.setReceta(null);
+	    turnoRepository.persist(turno);
+	    return true;
+    
 	}
 
 	 @Override
@@ -111,5 +132,6 @@ public class TurnoService implements ITurnoService {
         return true;
         
 	}
-
 }
+
+

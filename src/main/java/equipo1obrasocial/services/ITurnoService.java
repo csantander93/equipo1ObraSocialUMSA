@@ -10,4 +10,6 @@ public interface ITurnoService {
 	public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception;
 
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception;
+
+	boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception;
 }
