@@ -46,6 +46,11 @@ public class TurnoController {
 	
 	@DELETE
 	@Path("/darBajaTurno")
+	@ApiOperation(value = "Dar de baja un turno", notes = "Libera un turno existente para permitir su reasignación")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Turno dado de baja exitosamente"),
+        @ApiResponse(code = 400, message = "Error al dar de baja el turno")
+    })
     public ResponseEntity<Object> darBajaTurno(@RequestBody TurnoEliminarDTORequest dto){
         try{
         	turnoService.darBajaTurno(dto);
@@ -80,6 +85,7 @@ public class TurnoController {
         @ApiResponse(code = 200, message = "Turno eliminado exitosamente"),
         @ApiResponse(code = 400, message = "Error al eliminar el turno")
     })
+	
     public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
         try{
         	turnoService.eliminarTurno(dto);
