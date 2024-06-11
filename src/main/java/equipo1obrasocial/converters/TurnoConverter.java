@@ -1,5 +1,6 @@
 package equipo1obrasocial.converters;
 
+import equipo1obrasocial.dtos.request.TurnoDTOMedico;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
@@ -24,5 +25,12 @@ public class TurnoConverter {
         turno.setActivo(true);
         return turno;
     }
+
+	public static Turno convertToEntity(TurnoDTOMedico dto, Medico medico) {
+		Turno turno = new Turno();
+		turno.setMedico(medico);
+        turno.setFecha_hora(dto.getFecha_hora());
+		return turno;
+	}
 
 }

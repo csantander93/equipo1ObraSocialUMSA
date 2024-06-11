@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOMedico;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
@@ -59,20 +60,6 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
-	@Override
-	@Transactional
-	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
-		
-        Turno turno = turnoRepository.findById(dto.getIdTurno());
-
-        if (turno == null) {
-            throw new Exception("El turno no existe");
-        }
-
-        turnoRepository.delete(turno);
-        return true;
-	    
-	}
 	
 	@Override
 	@Transactional
@@ -132,4 +119,24 @@ public class TurnoService implements ITurnoService {
 	        return true;
 	    }
 
+	@Override
+	@Transactional
+	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
+		
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new Exception("El turno no existe");
+        }
+       
+        turnoRepository.delete(turno);
+        return true;
+        
+	}
+
+
+
+	
 }
+
+
