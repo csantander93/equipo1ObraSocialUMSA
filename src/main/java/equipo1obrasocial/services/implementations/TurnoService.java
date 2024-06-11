@@ -4,6 +4,7 @@ import java.time.LocalTime;
 
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOMedico;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
@@ -132,6 +133,10 @@ public class TurnoService implements ITurnoService {
         return true;
         
 	}
+
+
+
+	
 }
 
 
