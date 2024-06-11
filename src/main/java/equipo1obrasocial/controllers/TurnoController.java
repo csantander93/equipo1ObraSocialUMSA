@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOMedico;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.services.ITurnoService;
@@ -29,15 +30,31 @@ public class TurnoController {
 	private ITurnoService turnoService;
 	
 	@POST
-	@Path("/crearTurno")
-    @ApiOperation(value = "Crear un nuevo turno", notes = "Crea un nuevo turno para un médico y paciente")
+	@Path("/crearTurnoConPaciente")
+    @ApiOperation(value = "Crear un nuevo turno para un paciente determinado", notes = "Crea un nuevo turno para un médico y paciente")
     @ApiResponses({
         @ApiResponse(code = 201, message = "Turno creado exitosamente"),
         @ApiResponse(code = 400, message = "Error al crear el turno")
         })
-    public ResponseEntity<Object> altaTurno(@RequestBody TurnoDTOMedicoPaciente dto){
+    public ResponseEntity<Object> altaTurnoConPaciente(@RequestBody TurnoDTOMedicoPaciente dto){
         try{
-        	turnoService.crearTurno(dto);
+        	turnoService.crearTurnoConPaciente(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));
+        }catch(Exception e){
+            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
+        }
+    }
+	
+	@POST
+	@Path("/crearTurnoSinPaciente")
+    @ApiOperation(value = "Crear un nuevo turno disponible", notes = "Crea un nuevo turno para un médico sin paciente asignado, este se encontrara libre para su asignacion luego")
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Turno creado exitosamente"),
+        @ApiResponse(code = 400, message = "Error al crear el turno")
+        })
+    public ResponseEntity<Object> altaTurnoSinPaciente(@RequestBody TurnoDTOMedico dto){
+        try{
+        	turnoService.crearTurnoSinPaciente(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
@@ -46,10 +63,15 @@ public class TurnoController {
 	
 	@DELETE
 	@Path("/darBajaTurno")
+    @ApiOperation(value = "Dar de baja un turno", notes = "Libera un turno existente para permitir su reasignación")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Turno dado de baja exitosamente"),
+        @ApiResponse(code = 400, message = "Error al dar de baja el turno")
+    })
     public ResponseEntity<Object> darBajaTurno(@RequestBody TurnoEliminarDTORequest dto){
         try{
         	turnoService.darBajaTurno(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se liberó el turno exitosamente"));
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Se liberó el turno exitosamente"));
 
         }catch(Exception e){
             return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
