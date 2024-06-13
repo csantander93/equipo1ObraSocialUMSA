@@ -7,10 +7,10 @@ import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 
 public interface ITurnoService {
 	
-	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) throws Exception;
-	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) throws Exception;
+	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) ;
+	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) ;
 	
-	public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception;
-	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception;
-	boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception;
+	public boolean actualizarTurno(TurnoActualizarDTORequest dto) ;
+	public boolean eliminarTurno(TurnoEliminarDTORequest dto) ;
+	boolean darBajaTurno(TurnoEliminarDTORequest dto) ;
 }
