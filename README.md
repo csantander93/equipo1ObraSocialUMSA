@@ -85,7 +85,7 @@ La aplicación permitirá las siguientes operaciones:
     mvn quarkus:dev
 
 5. **Acceder a la documentación de la API**:
-   Una vez que la aplicación esté en funcionamiento, puedes acceder a la documentación de Swagger en http://localhost:8080/swagger-ui.
+   Una vez que la aplicación esté en funcionamiento, puedes acceder a la documentación de Swagger en http://localhost:8080/documentacion.
    Ademas en el directorio raiz del proyecto se encuentra la carpeta "img" con screenshots asociadas al proyecto.
 
 <p>
