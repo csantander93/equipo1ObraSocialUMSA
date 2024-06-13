@@ -37,12 +37,8 @@ public class TurnoController {
         @ApiResponse(code = 400, message = "Error al crear el turno")
         })
     public ResponseEntity<Object> altaTurnoConPaciente(@RequestBody TurnoDTOMedicoPaciente dto){
-        try{
         	turnoService.crearTurnoConPaciente(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
     }
 	
 	@POST
@@ -53,12 +49,9 @@ public class TurnoController {
         @ApiResponse(code = 400, message = "Error al crear el turno")
         })
     public ResponseEntity<Object> altaTurnoSinPaciente(@RequestBody TurnoDTOMedico dto){
-        try{
+
         	turnoService.crearTurnoSinPaciente(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
     }
 	
 	@DELETE
@@ -69,13 +62,10 @@ public class TurnoController {
         @ApiResponse(code = 400, message = "Error al dar de baja el turno")
     })
     public ResponseEntity<Object> darBajaTurno(@RequestBody TurnoEliminarDTORequest dto){
-        try{
+
         	turnoService.darBajaTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Se liberó el turno exitosamente"));
 
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
     } 
 	
 	@PUT
@@ -86,13 +76,10 @@ public class TurnoController {
         @ApiResponse(code = 400, message = "Error al actualizar el turno")
     })
     public ResponseEntity<Object> actualizarTurno(@RequestBody TurnoActualizarDTORequest dto){
-        try{
+
         	turnoService.actualizarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se actualizo exitosamente"));
 
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
     }
 
 	@DELETE
@@ -103,14 +90,10 @@ public class TurnoController {
         @ApiResponse(code = 400, message = "Error al eliminar el turno")
     })
     public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
-        try{
+
         	turnoService.eliminarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Se eliminó el turno exitosamente"));
 
-
-        }catch(Exception e){
-            return new ResponseEntity<>(new Mensaje(e.getMessage()) , HttpStatus.BAD_REQUEST);
-        }
     }
 
 }

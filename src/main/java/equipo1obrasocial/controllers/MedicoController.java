@@ -25,7 +25,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.Response;
 
-@Path("/medico")
+@Path("/medicos")
 @RequestScoped
 @Api(tags = "Medico Controller", description = "Operaciones relacionadas con la gestión de médicos")
 public class MedicoController {
@@ -34,7 +34,7 @@ public class MedicoController {
     private IMedicoService medicoService;
     
     @GET
-    @Path("/especialistas")
+    @Path("/cartillaMedicos")
     @ApiOperation(value = "Obtener cartilla de médicos", notes = "Obtiene una lista de todos los médicos especialistas")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Cartilla de médicos obtenida exitosamente"),

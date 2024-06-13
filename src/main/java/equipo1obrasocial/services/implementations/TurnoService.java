@@ -2,6 +2,10 @@ package equipo1obrasocial.services.implementations;
 
 import java.time.LocalTime;
 
+import equipo1.obrasocial.exceptions.MedicoNoExisteException;
+import equipo1.obrasocial.exceptions.TurnoFueraDeHorarioException;
+import equipo1.obrasocial.exceptions.TurnoNoExisteException;
+import equipo1.obrasocial.exceptions.TurnoOcupadoException;
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
 import equipo1obrasocial.dtos.request.TurnoDTOMedico;
@@ -33,7 +37,7 @@ public class TurnoService implements ITurnoService {
 	
 	@Override
 	@Transactional
-	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) throws Exception {
+	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) {
 		
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
@@ -45,12 +49,12 @@ public class TurnoService implements ITurnoService {
 			
 			for(Turno t : medico.getTurnos()) {
 				if(t.getFecha_hora().equals(dto.getFecha_hora())) {
-					throw new Exception("El horario que estas queriendo crear un turno se encuentra ocupado");
+					throw new TurnoOcupadoException();
 				}
 			}	
 			
 		} else {
-			throw new Exception ("El medico no atiende en el horario indicado");
+			throw new TurnoFueraDeHorarioException();
 		}
 		
 		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);
@@ -69,7 +73,7 @@ public class TurnoService implements ITurnoService {
 	 * @param id
 	 * @return
 	 */
-	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) throws Exception {
+	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) {
 		
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		
@@ -80,12 +84,12 @@ public class TurnoService implements ITurnoService {
 			
 			for(Turno t : medico.getTurnos()) {
 				if(t.getFecha_hora().equals(dto.getFecha_hora())) {
-					throw new Exception("El horario que estas queriendo crear un turno se encuentra ocupado");
+					throw new TurnoOcupadoException();
 				}
 			}	
 			
 		} else {
-			throw new Exception ("El medico no atiende en el horario indicado");
+			throw new TurnoFueraDeHorarioException();
 		}
 		
 		Turno turno = TurnoConverter.convertToEntity(dto, medico);
@@ -96,15 +100,32 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
-	
+<<<<<<< HEAD
+=======
 	@Override
 	@Transactional
-	public boolean darBajaTurno(TurnoEliminarDTORequest dto) throws Exception {
+	public boolean eliminarTurno(TurnoEliminarDTORequest dto) {
 		
         Turno turno = turnoRepository.findById(dto.getIdTurno());
 
         if (turno == null) {
-            throw new Exception("El turno no existe");
+            throw new TurnoNoExisteException();
+        }
+
+        turnoRepository.delete(turno);
+        return true;
+	    
+	}
+>>>>>>> rama_cris
+	
+	@Override
+	@Transactional
+	public boolean darBajaTurno(TurnoEliminarDTORequest dto) {
+		
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+
+        if (turno == null) {
+            throw new TurnoNoExisteException();
         }
 
 	    turno.setActivo(false); 
@@ -118,18 +139,18 @@ public class TurnoService implements ITurnoService {
 
 	 @Override
 	 @Transactional
-	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) throws Exception {
+	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) {
 	        Turno turno = turnoRepository.findById(dto.getIdTurno());
 	        
 	        System.out.println(turno);
 	        
 	        if (turno == null) {
-	            throw new Exception("El turno no existe");
+	            throw new TurnoNoExisteException();
 	        }
 
 	        Medico medicoNuevo = medicoRepository.findById(dto.getIdMedicoNuevo());
 	        if (medicoNuevo == null) {
-	            throw new Exception("El nuevo médico no existe");
+	            throw new MedicoNoExisteException();
 	        }
 
 	        LocalTime horaNuevaTurno = dto.getFechaHoraNueva().toLocalTime();
@@ -139,11 +160,11 @@ public class TurnoService implements ITurnoService {
 
 	            for (Turno t : medicoNuevo.getTurnos()) {
 	                if (t.getFecha_hora().equals(dto.getFechaHoraNueva())) {
-	                    throw new Exception("El horario que estas queriendo crear un turno se encuentra ocupado");
+	                    throw new TurnoOcupadoException();
 	                }
 	            }    
 	        } else {
-	            throw new Exception("El medico no atiende en el horario indicado");
+	            throw new TurnoFueraDeHorarioException();
 	        }
 
 	        turno.setMedico(medicoNuevo);
