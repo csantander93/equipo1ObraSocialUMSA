@@ -33,7 +33,7 @@ public class TurnoService implements ITurnoService {
 	
 	@Override
 	@Transactional
-	public boolean crearTurno(TurnoDTOMedicoPaciente dto) throws Exception {
+	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) throws Exception {
 		
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
@@ -56,6 +56,42 @@ public class TurnoService implements ITurnoService {
 		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);
 		
 		turnoRepository.persist(turno);
+        turno.setActivo(true);
+		
+		return true;
+	}
+	
+	@Override
+	@Transactional
+	/**
+	 *Este metodo crea un turno a un medico determinado pero sin la necesidad de asignar un paciente, ni motivo de consulta, y el turno por defecto
+	 *se encuentra en false para que luego en la vista del front el paciente pueda obtener todos los disponibles y se asigne uno
+	 * @param id
+	 * @return
+	 */
+	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) throws Exception {
+		
+		Medico medico = medicoRepository.findById(dto.getIdMedico());
+		
+		LocalTime horaDelTurno = dto.getFecha_hora().toLocalTime();
+		
+		if( (horaDelTurno.isAfter(medico.getAtencionDesde()) || horaDelTurno.equals(medico.getAtencionDesde()))  && 
+				(horaDelTurno.isBefore(medico.getAtencionHasta() ) || horaDelTurno.equals(medico.getAtencionHasta()))) {
+			
+			for(Turno t : medico.getTurnos()) {
+				if(t.getFecha_hora().equals(dto.getFecha_hora())) {
+					throw new Exception("El horario que estas queriendo crear un turno se encuentra ocupado");
+				}
+			}	
+			
+		} else {
+			throw new Exception ("El medico no atiende en el horario indicado");
+		}
+		
+		Turno turno = TurnoConverter.convertToEntity(dto, medico);
+		
+		turnoRepository.persist(turno);
+        turno.setActivo(false);
 		
 		return true;
 	}

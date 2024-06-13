@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TurnoDTOMedico {
-
 	private long idMedico;
 	private LocalDateTime fecha_hora;
 }

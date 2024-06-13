@@ -14,23 +14,15 @@ public class TurnoConverter {
         turno.setPaciente(paciente);
         turno.setFecha_hora(dto.getFecha_hora());
         turno.setMotivoConsulta(dto.getMotivoConsulta());
-        turno.setActivo(true);
         return turno;
     }
     
-    public static Turno convertToEntity(TurnoDTOMedicoPaciente dto) {
+    public static Turno convertToEntity(TurnoDTOMedico dto, Medico medico) {
         Turno turno = new Turno();
+        turno.setMedico(medico);
         turno.setFecha_hora(dto.getFecha_hora());
-        turno.setMotivoConsulta(dto.getMotivoConsulta());
-        turno.setActivo(true);
         return turno;
     }
 
-	public static Turno convertToEntity(TurnoDTOMedico dto, Medico medico) {
-		Turno turno = new Turno();
-		turno.setMedico(medico);
-        turno.setFecha_hora(dto.getFecha_hora());
-		return turno;
-	}
 
 }
