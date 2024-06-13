@@ -100,8 +100,6 @@ public class TurnoService implements ITurnoService {
 		return true;
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	@Transactional
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) {
@@ -116,7 +114,6 @@ public class TurnoService implements ITurnoService {
         return true;
 	    
 	}
->>>>>>> rama_cris
 	
 	@Override
 	@Transactional
@@ -176,20 +173,7 @@ public class TurnoService implements ITurnoService {
 	        return true;
 	    }
 
-	@Override
-	@Transactional
-	public boolean eliminarTurno(TurnoEliminarDTORequest dto) throws Exception {
-		
-        Turno turno = turnoRepository.findById(dto.getIdTurno());
 
-        if (turno == null) {
-            throw new Exception("El turno no existe");
-        }
-       
-        turnoRepository.delete(turno);
-        return true;
-        
-	}
 
 
 
