@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,4 +61,8 @@ public class Medico extends PanacheEntityBase {
 	@ManyToOne
 	@JoinColumn(name = "id_clinica")
 	private Clinica clinica;
+	
+	@OneToOne
+	@JoinColumn(name = "id_usuario")
+	private Usuario usuario;
 }
