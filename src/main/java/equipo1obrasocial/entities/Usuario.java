@@ -1,9 +1,5 @@
 package equipo1obrasocial.entities;
 
-import java.time.LocalDate;
-import java.util.Set;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,45 +14,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Paciente extends PanacheEntityBase {
+public class Usuario extends PanacheEntityBase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_paciente")
+	@Column(name="id_usuario")
 	private long id;
 	
 	@Column
-	private String nombre;
-	
-	
-	@Column
-	private String apellido;
-	
-	
-	@Column(unique = true)
-	private String dni;
-	
+	private String email;
 	
 	@Column
-	private String num_afiliado;
+	private String password;
 	
-	
-	@Column
-	private LocalDate fecha_nac;
-	
-	@OneToMany(mappedBy = "paciente")
-	private Set<Turno> turnos;
-	
-	@OneToMany(mappedBy = "paciente")
-	private Set<Receta> recetas;
+	@Column(name="rol_usuario")
+	private String rolUsuario;
 	
 	@OneToOne
-	@JoinColumn(name = "id_usuario")
-	private Usuario usuario;
+	@JoinColumn(name = "id_medico")
+	private Medico medico;
+	
+	@OneToOne
+	@JoinColumn(name = "id_paciente")
+	private Paciente paciente;
 }
