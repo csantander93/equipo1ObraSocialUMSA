@@ -95,17 +95,24 @@
 	    <version>1.6.2</version>
 	</dependency>
 	<dependency>
-    	<groupId>org.mockito</groupId>
-    	<artifactId>mockito-core</artifactId>
-    	<version>4.0.0</version> <!-- Asegúrate de usar la última versión disponible -->
-   		<scope>test</scope>
-	</dependency>
-	<dependency>
-	    <groupId>org.mockito</groupId>
-	    <artifactId>mockito-junit-jupiter</artifactId>
-	    <version>4.0.0</version> <!-- Asegúrate de usar la última versión disponible -->
-	    <scope>test</scope>
-	</dependency>
+      <groupId>io.quarkiverse.groovy</groupId>
+      <artifactId>quarkus-groovy-junit5</artifactId>
+      <version>3.10.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+
+
+
 
 	
   </dependencies>

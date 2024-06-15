@@ -1,4 +1,4 @@
-package configurations;
+package equipo1.obrasocial.configurations;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

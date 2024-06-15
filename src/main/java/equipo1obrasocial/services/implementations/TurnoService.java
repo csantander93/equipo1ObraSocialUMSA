@@ -1,13 +1,16 @@
 package equipo1obrasocial.services.implementations;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import equipo1.obrasocial.exceptions.HorarioNoDefinidoException;
 import equipo1.obrasocial.exceptions.MedicoNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoFueraDeHorarioException;
 import equipo1.obrasocial.exceptions.TurnoNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoOcupadoException;
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
@@ -93,12 +96,62 @@ public class TurnoService implements ITurnoService {
 		}
 		
 		Turno turno = TurnoConverter.convertToEntity(dto, medico);
+		turno.setActivo(false);
 		
 		turnoRepository.persist(turno);
-        turno.setActivo(false);
 		
 		return true;
 	}
+
+	@Override
+	@Transactional
+	public boolean crearTurnosMedicoFechaCada20Min(TurnoDTOMedicoFecha dto) {
+	    // Obtener el médico por ID
+	    Medico medico = medicoRepository.findById(dto.getIdMedico());
+
+	    if (medico == null) {
+	        throw new MedicoNoExisteException();
+	    }
+
+	    LocalTime horaInicio = medico.getAtencionDesde();
+	    LocalTime horaFin = medico.getAtencionHasta();
+
+	    // Verificar que los horarios estén definidos
+	    if (horaInicio == null || horaFin == null) {
+	        throw new HorarioNoDefinidoException();
+	    }
+
+	    // Inicializar las variables de tiempo
+	    LocalDateTime fechaHoraActual = dto.getFecha().atTime(horaInicio);
+	    LocalDateTime fechaHoraFin = dto.getFecha().atTime(horaFin);
+
+	    // Iterar desde la hora de inicio hasta la hora de fin
+	    while (!fechaHoraActual.isAfter(fechaHoraFin)) {
+	        LocalDateTime fechaHoraTurno = fechaHoraActual;
+
+	        // Verificar si ya existe un turno para la fecha y hora actual
+	        boolean turnoExistente = medico.getTurnos().stream()
+	            .anyMatch(turno -> turno.getFecha_hora().equals(fechaHoraTurno));
+
+	        // Si el turno ya existe, continuar con el siguiente intervalo de 20 minutos
+	        if (turnoExistente) {
+	            fechaHoraActual = fechaHoraActual.plusMinutes(20);
+	            continue;
+	        }
+
+	        // Convertir el DTO a entidad y persistirlo
+	        Turno turno = TurnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
+	        turno.setActivo(false);
+	        turnoRepository.persist(turno);
+
+	        // Incrementar la hora actual en 20 minutos
+	        fechaHoraActual = fechaHoraActual.plusMinutes(20);
+	    }
+
+	    return true;
+	}
+
+
 
 	@Override
 	@Transactional

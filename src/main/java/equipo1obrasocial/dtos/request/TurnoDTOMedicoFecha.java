@@ -1,6 +1,6 @@
 package equipo1obrasocial.dtos.request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TurnoDTOMedicoFechaHora {
+public class TurnoDTOMedicoFecha {
 	
 	private long idMedico;
-	private LocalDateTime fecha_hora;
+	private LocalDate fecha;
+
 }
