@@ -58,7 +58,7 @@ public class TurnoServiceTest {
     @Test
     @Transactional
     public void testCrearTurnoConPacienteExitoso() {
-        // Datos de prueba
+        // Datos de prueb
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
         dto.setIdMedico(1L);
         dto.setIdPaciente(1L);
