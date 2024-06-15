@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TurnoDTOMedico {
+public class TurnoDTOMedicoFechaHora {
 	private long idMedico;
 	private LocalDateTime fecha_hora;
 }

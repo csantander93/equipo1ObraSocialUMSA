@@ -8,7 +8,7 @@ import equipo1.obrasocial.exceptions.TurnoNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoOcupadoException;
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
-import equipo1obrasocial.dtos.request.TurnoDTOMedico;
+import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.entities.Medico;
@@ -73,7 +73,7 @@ public class TurnoService implements ITurnoService {
 	 * @param id
 	 * @return
 	 */
-	public boolean crearTurnoSinPaciente(TurnoDTOMedico dto) {
+	public boolean crearTurnoSinPaciente(TurnoDTOMedicoFechaHora dto) {
 		
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
 		

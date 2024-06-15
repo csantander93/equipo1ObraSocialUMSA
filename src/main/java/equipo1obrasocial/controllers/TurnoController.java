@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
-import equipo1obrasocial.dtos.request.TurnoDTOMedico;
+import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.services.ITurnoService;
@@ -48,7 +48,7 @@ public class TurnoController {
         @ApiResponse(code = 201, message = "Turno creado exitosamente"),
         @ApiResponse(code = 400, message = "Error al crear el turno")
         })
-    public ResponseEntity<Object> altaTurnoSinPaciente(@RequestBody TurnoDTOMedico dto){
+    public ResponseEntity<Object> altaTurnoSinPaciente(@RequestBody TurnoDTOMedicoFechaHora dto){
 
         	turnoService.crearTurnoSinPaciente(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agrego el turno exitosamente para el dia "+dto.getFecha_hora()));
