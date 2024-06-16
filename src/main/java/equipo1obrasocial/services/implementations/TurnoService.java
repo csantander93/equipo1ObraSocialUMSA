@@ -192,8 +192,6 @@ public class TurnoService implements ITurnoService {
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) {
 	        Turno turno = turnoRepository.findById(dto.getIdTurno());
 	        
-	        System.out.println(turno);
-	        
 	        if (turno == null) {
 	            throw new TurnoNoExisteException();
 	        }

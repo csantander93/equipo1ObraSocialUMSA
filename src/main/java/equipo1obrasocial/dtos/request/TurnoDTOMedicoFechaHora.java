@@ -11,10 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-<<<<<<< HEAD
 
-=======
->>>>>>> rama-julian
 public class TurnoDTOMedicoFechaHora {
 	
 	private long idMedico;
