@@ -23,38 +23,36 @@ public class EspecialidadServiceTest {
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.initMocks(this); 
+        MockitoAnnotations.openMocks(this); // Inicializamos los mocks
     }
 
     @Test
     public void testCrearEspecialidad_OK() throws Exception {
-    	
+        // Mockear el comportamiento para que no lance excepciones
         when(especialidadService.crearEspecialidad(anyString())).thenReturn(true);
 
         boolean result = especialidadService.crearEspecialidad("Cardiologia");
 
         assertEquals(true, result);
 
+        // Verifica que se llamo al metodo con los parametros esperados
         verify(especialidadService).crearEspecialidad("Cardiologia");
     }
 
     @Test
     public void testCrearEspecialidad_NombreExistente() throws Exception {
-        // Mockear el comportamiento para que lance la excepción esperada
+        // Mockear el comportamiento para que lance la excepcion esperada
         doThrow(new Exception("Ya existe la especialidad Cardiologia"))
-                .when(especialidadService).crearEspecialidad("Cardiología");
+                .when(especialidadService).crearEspecialidad("Cardiologia");
 
-        // Verificar que se lance la excepción correcta
+        // Verificar que se lance la excepcion correcta
         Exception exception = assertThrows(Exception.class, () -> {
             especialidadService.crearEspecialidad("Cardiologia");
         });
 
         assertEquals("Ya existe la especialidad Cardiologia", exception.getMessage());
 
+        // Verifica que se llamo al metodo con los parametros esperados
         verify(especialidadService).crearEspecialidad("Cardiologia");
     }
-
-
-
-
 }
