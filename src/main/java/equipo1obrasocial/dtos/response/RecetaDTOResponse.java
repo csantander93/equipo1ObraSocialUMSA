@@ -14,6 +14,8 @@ public class RecetaDTOResponse {
 
 	private long idReceta;
 	private String nombreClinica;
+	private String direccionClinica;
+	private String especialidadMedico;
 	private LocalDate fecha;
 	private String diagnostico;
 	private String tratamiento;
