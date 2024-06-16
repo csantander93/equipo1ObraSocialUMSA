@@ -1,4 +1,4 @@
-package equipo1obrasocial;
+package equipo1obrasocial.services.implementations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
