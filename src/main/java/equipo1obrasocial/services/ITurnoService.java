@@ -10,6 +10,7 @@ public interface ITurnoService {
 	
 	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) ;
 	public boolean crearTurnoSinPaciente(TurnoDTOMedicoFechaHora dto) ;
+	public boolean crearTurnosMedicoFechaCada15Min(TurnoDTOMedicoFecha dto);
 	public boolean crearTurnosMedicoFechaCada20Min(TurnoDTOMedicoFecha dto);
 	public boolean actualizarTurno(TurnoActualizarDTORequest dto) ;
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) ;

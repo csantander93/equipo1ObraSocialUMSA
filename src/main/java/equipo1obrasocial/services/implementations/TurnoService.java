@@ -40,6 +40,19 @@ public class TurnoService implements ITurnoService {
 	
 	@Override
 	@Transactional
+	/**
+	 * Este método crea un turno para un médico específico con un paciente asignado y en una fecha y hora determinadas,
+	 * siempre que cumpla con las condiciones de horario de atención del médico y no haya conflictos con otros turnos existentes.
+	 *
+	 * Especialmente útil para casos donde se requiere asignar un horario específico con un paciente indicado.
+	 *
+	 * @param dto el objeto de transferencia de datos que contiene el ID del médico, el ID del paciente y la fecha y hora del turno a crear.
+	 * @return true si el turno se creó correctamente, false en caso contrario.
+	 * @throws TurnoOcupadoException si ya existe un turno para la fecha y hora especificada.
+	 * @throws TurnoFueraDeHorarioException si la hora del turno está fuera del horario de atención del médico.
+	 * @throws MedicoNoExisteException si el médico especificado por el ID no existe en el sistema.
+	 * @throws PacienteNoExisteException si el paciente especificado por el ID no existe en el sistema.
+	 */
 	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) {
 		
 		Medico medico = medicoRepository.findById(dto.getIdMedico());
@@ -71,10 +84,16 @@ public class TurnoService implements ITurnoService {
 	@Override
 	@Transactional
 	/**
-	 *Este metodo crea un turno a un medico determinado pero sin la necesidad de asignar un paciente, ni motivo de consulta, y el turno por defecto
-	 *se encuentra en false para que luego en la vista del front el paciente pueda obtener todos los disponibles y se asigne uno
-	 * @param id
-	 * @return
+	 * Este método crea un turno para un médico determinado sin asignar un paciente ni un motivo de consulta.
+	 * El turno creado por defecto se encuentra inactivo (false) para que luego, en la vista del frontend, 
+	 * el paciente pueda obtener todos los turnos disponibles y asignarse uno.
+	 *
+	 * @param dto el objeto de transferencia de datos que contiene la información del turno a crear,
+	 *            incluyendo el ID del médico y la fecha y hora del turno.
+	 * @return true si el turno se creó correctamente, false en caso contrario.
+	 * @throws TurnoOcupadoException si ya existe un turno en la fecha y hora especificada.
+	 * @throws TurnoFueraDeHorarioException si la hora del turno está fuera del horario de atención del médico.
+	 * @throws MedicoNoExisteException si el médico especificado no existe.
 	 */
 	public boolean crearTurnoSinPaciente(TurnoDTOMedicoFechaHora dto) {
 		
@@ -102,9 +121,80 @@ public class TurnoService implements ITurnoService {
 		
 		return true;
 	}
+	
+	/**
+	 * Este método crea automáticamente una serie de turnos para un médico en intervalos de 15 minutos,
+	 * comenzando desde la hora de inicio de atención del médico hasta la hora de fin de atención, en una fecha específica.
+	 *
+	 * Especialmente útil para programar turnos más frecuentes dentro del horario de atención del médico.
+	 *
+	 * @param dto el objeto de transferencia de datos que contiene el ID del médico y la fecha para la cual se deben crear los turnos.
+	 * @return true si se crearon todos los turnos correctamente, false en caso contrario.
+	 * @throws MedicoNoExisteException si el médico especificado por el ID no existe en el sistema.
+	 * @throws HorarioNoDefinidoException si los horarios de inicio o fin de atención del médico no están definidos.
+	 *                                    Esto impide determinar el rango de horas válidas para la creación de turnos.
+	 */
+	@Override
+	@Transactional
+	public boolean crearTurnosMedicoFechaCada15Min(TurnoDTOMedicoFecha dto) {
+	    // Obtener el médico por ID
+	    Medico medico = medicoRepository.findById(dto.getIdMedico());
+
+	    if (medico == null) {
+	        throw new MedicoNoExisteException();
+	    }
+
+	    LocalTime horaInicio = medico.getAtencionDesde();
+	    LocalTime horaFin = medico.getAtencionHasta();
+
+	    // Verificar que los horarios estén definidos
+	    if (horaInicio == null || horaFin == null) {
+	        throw new HorarioNoDefinidoException();
+	    }
+
+	    // Inicializar las variables de tiempo
+	    LocalDateTime fechaHoraActual = dto.getFecha().atTime(horaInicio);
+	    LocalDateTime fechaHoraFin = dto.getFecha().atTime(horaFin);
+
+	    // Iterar desde la hora de inicio hasta la hora de fin
+	    while (!fechaHoraActual.isAfter(fechaHoraFin)) {
+	        LocalDateTime fechaHoraTurno = fechaHoraActual;
+
+	        // Verificar si ya existe un turno para la fecha y hora actual
+	        boolean turnoExistente = medico.getTurnos().stream()
+	            .anyMatch(turno -> turno.getFecha_hora().equals(fechaHoraTurno));
+
+	        // Si el turno ya existe, continuar con el siguiente intervalo de 15 minutos
+	        if (turnoExistente) {
+	            fechaHoraActual = fechaHoraActual.plusMinutes(15);
+	            continue;
+	        }
+
+	        // Convertir el DTO a entidad de Turno y persistirlo
+	        Turno turno = TurnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
+	        turno.setActivo(false);
+	        turnoRepository.persist(turno);
+
+	        // Incrementar la hora actual en 15 minutos
+	        fechaHoraActual = fechaHoraActual.plusMinutes(15);
+	    }
+
+	    return true;
+	}
+
 
 	@Override
 	@Transactional
+	/**
+	 * Este método crea automáticamente una serie de turnos para un médico en intervalos de 20 minutos,
+	 * comenzando desde la hora de inicio de atención del médico hasta la hora de fin de atención, en una fecha específica.
+	 *
+	 * @param dto el objeto de transferencia de datos que contiene el ID del médico y la fecha para la cual se deben crear los turnos.
+	 * @return true si se crearon todos los turnos correctamente, false en caso contrario.
+	 * @throws MedicoNoExisteException si el médico especificado por el ID no existe en el sistema.
+	 * @throws HorarioNoDefinidoException si los horarios de inicio o fin de atención del médico no están definidos.
+	 *                                    Esto impide determinar el rango de horas válidas para la creación de turnos.
+	 */
 	public boolean crearTurnosMedicoFechaCada20Min(TurnoDTOMedicoFecha dto) {
 	    // Obtener el médico por ID
 	    Medico medico = medicoRepository.findById(dto.getIdMedico());
@@ -150,8 +240,6 @@ public class TurnoService implements ITurnoService {
 
 	    return true;
 	}
-
-
 
 	@Override
 	@Transactional

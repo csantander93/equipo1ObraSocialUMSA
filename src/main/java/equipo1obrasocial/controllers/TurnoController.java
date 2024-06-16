@@ -56,13 +56,26 @@ public class TurnoController {
     }
 	
 	@POST
+	@Path("/crearTurnosMedicoFechaC15Min")
+    @ApiOperation(value = " ", notes = " ")
+    @ApiResponses({
+        @ApiResponse(code = 201, message = "Turnos creados exitosamente"),
+        @ApiResponse(code = 400, message = "Error al crear el turnos para ese dia")
+        })
+    public ResponseEntity<Object> altaTurnosMedicoFechaC15Min(@RequestBody TurnoDTOMedicoFecha dto){
+
+        	turnoService.crearTurnosMedicoFechaCada15Min(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agregaron los turnos exitosamente para el dia "+dto.getFecha()));
+    }
+	
+	@POST
 	@Path("/crearTurnosMedicoFechaC20Min")
     @ApiOperation(value = " ", notes = " ")
     @ApiResponses({
         @ApiResponse(code = 201, message = "Turnos creados exitosamente"),
         @ApiResponse(code = 400, message = "Error al crear el turnos para ese dia")
         })
-    public ResponseEntity<Object> altaTurnosMedicoFecha(@RequestBody TurnoDTOMedicoFecha dto){
+    public ResponseEntity<Object> altaTurnosMedicoFechaC20Min(@RequestBody TurnoDTOMedicoFecha dto){
 
         	turnoService.crearTurnosMedicoFechaCada20Min(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agregaron los turnos exitosamente para el dia "+dto.getFecha()));

@@ -1,10 +1,14 @@
 package equipo1obrasocial;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +18,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1.obrasocial.exceptions.TurnoOcupadoException;
+import equipo1.obrasocial.exceptions.HorarioNoDefinidoException;
 import equipo1.obrasocial.exceptions.MedicoNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoFueraDeHorarioException;
 import equipo1.obrasocial.exceptions.TurnoNoExisteException;
@@ -62,7 +68,6 @@ public class TurnoServiceTest {
        }
 
     @Test
-    @Transactional
     public void testCrearTurnoConPacienteExitoso() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
@@ -86,7 +91,6 @@ public class TurnoServiceTest {
     }
 
     @Test
-    @Transactional
     public void testCrearTurnoConPacienteTurnoOcupado() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
@@ -110,7 +114,6 @@ public class TurnoServiceTest {
 
 
     @Test
-    @Transactional
     public void testCrearTurnoConPacienteFueraDeHorario() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
@@ -127,7 +130,6 @@ public class TurnoServiceTest {
     }
     
     @Test
-    @Transactional
     public void testDarBajaTurnoExitoso() {
         // Datos de prueba
         TurnoEliminarDTORequest dto = new TurnoEliminarDTORequest();
@@ -415,6 +417,152 @@ public class TurnoServiceTest {
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(TurnoFueraDeHorarioException.class, () -> {
             turnoService.crearTurnoSinPaciente(dto);
+        });
+    }
+    
+    @Test
+    public void testCrearTurnosMedicoFechaCada20MinExitoso() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+
+        // Ejecutar el método bajo prueba
+        boolean resultado = turnoService.crearTurnosMedicoFechaCada20Min(dto);
+
+        // Verificar el resultado
+        assertTrue(resultado);
+
+        // Verificar las interacciones con el turnoRepository y obtener los turnos persistidos
+        ArgumentCaptor<Turno> turnoCaptor = ArgumentCaptor.forClass(Turno.class);
+        verify(turnoRepository, atLeastOnce()).persist(turnoCaptor.capture());
+
+        // Verificar que los turnos se han añadido correctamente
+        Set<LocalDateTime> horariosEsperados = new HashSet<>();
+        LocalDateTime fechaHoraInicio = dto.getFecha().atTime(medico.getAtencionDesde());
+        LocalDateTime fechaHoraFin = dto.getFecha().atTime(medico.getAtencionHasta());
+        while (!fechaHoraInicio.isAfter(fechaHoraFin)) {
+            horariosEsperados.add(fechaHoraInicio);
+            fechaHoraInicio = fechaHoraInicio.plusMinutes(20);
+        }
+
+        Set<LocalDateTime> horariosTurnosPersistidos = new HashSet<>();
+        for (Turno turno : turnoCaptor.getAllValues()) {
+            horariosTurnosPersistidos.add(turno.getFecha_hora());
+        }
+
+        assertEquals(horariosEsperados, horariosTurnosPersistidos);
+    }
+
+    @Test
+    public void testCrearTurnosMedicoFechaCada20MinMedicoNoExiste() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(null);
+
+        // Ejecutar el método bajo prueba y verificar la excepción
+        assertThrows(MedicoNoExisteException.class, () -> {
+            turnoService.crearTurnosMedicoFechaCada20Min(dto);
+        });
+    }
+
+    @Test
+    public void testCrearTurnosMedicoFechaCada20MinHorarioNoDefinido() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Medico sin horarios definidos
+        medico.setAtencionDesde(null);
+        medico.setAtencionHasta(null);
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+
+        // Ejecutar el método bajo prueba y verificar la excepción
+        assertThrows(HorarioNoDefinidoException.class, () -> {
+            turnoService.crearTurnosMedicoFechaCada20Min(dto);
+        });
+    }
+    
+    @Test
+    public void testCrearTurnosMedicoFechaCada15MinExitoso() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+
+        // Ejecutar el método bajo prueba
+        boolean resultado = turnoService.crearTurnosMedicoFechaCada15Min(dto);
+
+        // Verificar el resultado
+        assertTrue(resultado);
+
+        // Verificar las interacciones con el turnoRepository y obtener los turnos persistidos
+        ArgumentCaptor<Turno> turnoCaptor = ArgumentCaptor.forClass(Turno.class);
+        verify(turnoRepository, atLeastOnce()).persist(turnoCaptor.capture());
+
+        // Verificar que los turnos se han añadido correctamente
+        Set<LocalDateTime> horariosEsperados = new HashSet<>();
+        LocalDateTime fechaHoraInicio = dto.getFecha().atTime(medico.getAtencionDesde());
+        LocalDateTime fechaHoraFin = dto.getFecha().atTime(medico.getAtencionHasta());
+        while (!fechaHoraInicio.isAfter(fechaHoraFin)) {
+            horariosEsperados.add(fechaHoraInicio);
+            fechaHoraInicio = fechaHoraInicio.plusMinutes(15);
+        }
+
+        Set<LocalDateTime> horariosTurnosPersistidos = new HashSet<>();
+        for (Turno turno : turnoCaptor.getAllValues()) {
+            horariosTurnosPersistidos.add(turno.getFecha_hora());
+        }
+
+        assertEquals(horariosEsperados, horariosTurnosPersistidos);
+    }
+
+    @Test
+    public void testCrearTurnosMedicoFechaCada15MinMedicoNoExiste() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(null);
+
+        // Ejecutar el método bajo prueba y verificar la excepción
+        assertThrows(MedicoNoExisteException.class, () -> {
+            turnoService.crearTurnosMedicoFechaCada15Min(dto);
+        });
+    }
+
+    @Test
+    public void testCrearTurnosMedicoFechaCada15MinHorarioNoDefinido() {
+        // Datos de prueba
+        TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
+        dto.setIdMedico(1L);
+        dto.setFecha(LocalDate.of(2023, 6, 15));
+
+        // Medico sin horarios definidos
+        medico.setAtencionDesde(null);
+        medico.setAtencionHasta(null);
+
+        // Mockear comportamientos
+        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+
+        // Ejecutar el método bajo prueba y verificar la excepción
+        assertThrows(HorarioNoDefinidoException.class, () -> {
+            turnoService.crearTurnosMedicoFechaCada15Min(dto);
         });
     }
 }
