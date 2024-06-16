@@ -32,6 +32,8 @@ public class RecetaConverter {
         recetaDTO.setFecha(receta.getFecha());
         recetaDTO.setIdReceta(receta.getId());
         recetaDTO.setNombreClinica(receta.getMedico().getClinica().getNombre());
+        recetaDTO.setDireccionClinica(receta.getMedico().getClinica().getDireccion());
+        recetaDTO.setEspecialidadMedico(receta.getMedico().getEspecialidad().getNombreEspecialidad());
         recetaDTO.setTratamiento(receta.getTratamiento());
         recetaDTO.setNombreCompletoMedico(receta.getMedico().getNombre().concat(" " + receta.getMedico().getApellido()));
 
