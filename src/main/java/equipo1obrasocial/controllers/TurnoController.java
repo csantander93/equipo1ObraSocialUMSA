@@ -116,6 +116,7 @@ public class TurnoController {
         @ApiResponse(code = 200, message = "Turno eliminado exitosamente"),
         @ApiResponse(code = 400, message = "Error al eliminar el turno")
     })
+	
     public ResponseEntity<Object> eliminarTurno(@RequestBody TurnoEliminarDTORequest dto){
 
         	turnoService.eliminarTurno(dto);
