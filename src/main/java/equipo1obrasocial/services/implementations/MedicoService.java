@@ -75,6 +75,13 @@ public class MedicoService implements IMedicoService {
 	}
 
 	@Override
+	/**
+	 * Este método permite traer a la vista una lista de los medicos, en conjunto a atributos importantes a considerar de cada uno de
+	 * ellos, por eso es que trae un DTO con datos importantes de cada uno
+	 * @return una lista de dto's con atributos importantes de los médicos, como su nombre y apellido, nombre de la especialidad, 
+	 * horarios de consulta, y la ubicación de la consulta
+	 * @throws Exception("No hay medicos que mostrar") si no hay medicos cargados en la BD.
+	 */
     public List<MedicoDTOResponse> getCartilla() throws Exception {
 
         List<Medico> medicos = medicoRepository.findAll().list();

@@ -243,6 +243,12 @@ public class TurnoService implements ITurnoService {
 
 	@Override
 	@Transactional
+	/**
+	 * Este método permite eliminar un turno de la BD, solamente asignando el id del turno que se quiere eliminar
+	 * @param dto con el id del turno a eliminar.
+	 * @return true si se eliminó correctamente el turno.
+	 * @throws TurnoNoExisteException si el turno que se dio por ID no existe.
+	 */
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) {
 		
         Turno turno = turnoRepository.findById(dto.getIdTurno());
@@ -277,6 +283,15 @@ public class TurnoService implements ITurnoService {
 
 	 @Override
 	 @Transactional
+		/**
+		 * Este método permite actualizar datos de un turno ya existente, como la fecha, el medico o un nuevo motivo de consulta
+		 * @param dto con los datos a actualizar y el id del turno al que se quiere modificar
+		 * @return true si se actualizó correctamente.
+		 * @throws TurnoNoExisteException si el turno que se dio por ID no existe.
+		 * @throws MedicoNoExisteException si el id del medico brindado en el dto no está asociado a ningún medico cargado en la BD.
+		 * @throws TurnoOcupadoException si existe un turno previamente asignado a la fecha y horario solicitada
+		 * @throws TurnoFueraDeHorarioException si se quiere asignarle un turno a un medico, pero este es pretendido fuera de sus rangos horarios.
+		 */
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) {
 	        Turno turno = turnoRepository.findById(dto.getIdTurno());
 	        
