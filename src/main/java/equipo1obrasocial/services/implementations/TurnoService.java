@@ -2,6 +2,8 @@ package equipo1obrasocial.services.implementations;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import equipo1.obrasocial.exceptions.HorarioNoDefinidoException;
 import equipo1.obrasocial.exceptions.MedicoNoExisteException;
@@ -14,6 +16,7 @@ import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
+import equipo1obrasocial.dtos.response.TurnoDTOResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Turno;
@@ -37,6 +40,9 @@ public class TurnoService implements ITurnoService {
 	
 	@Inject 
 	private TurnoRepository turnoRepository;
+	
+	@Inject 
+	private TurnoConverter turnoConverter;
 	
 	@Override
 	@Transactional
@@ -326,6 +332,23 @@ public class TurnoService implements ITurnoService {
 	        
 	        return true;
 	    }
+
+	@Override
+	@Transactional
+    public List<TurnoDTOResponse> traerTurnosActivosPorMedico(long idMedico) {
+		
+		if(medicoRepository.findById(idMedico) == null) {
+			throw new MedicoNoExisteException();
+		}
+		
+        List<Turno> turnos = turnoRepository.findByMedicoIdAndActivo(idMedico);
+        List<TurnoDTOResponse> dtos = new ArrayList();
+        for (Turno t : turnos) {
+        	TurnoDTOResponse dto = turnoConverter.convertToDTO(t);
+        	dtos.add(dto);
+        }
+        return dtos;
+    }
 	
 }
 

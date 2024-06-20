@@ -10,4 +10,12 @@ public class UsuarioRepository implements PanacheRepository<Usuario>{
 	public Usuario findByEmail(String email) {
 		return find("email",email).firstResult();
 	}
+	
+	public Usuario findByPacienteId(Long pacienteId) {
+	    return find("paciente.id", pacienteId).firstResult();
+	}
+	
+	public Usuario findByMedicoId(Long medicoId) {
+	    return find("medico.id", medicoId).firstResult();
+	}
 }

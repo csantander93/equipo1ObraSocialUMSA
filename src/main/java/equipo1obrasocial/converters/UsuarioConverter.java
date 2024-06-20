@@ -1,6 +1,7 @@
 package equipo1obrasocial.converters;
 
 import equipo1obrasocial.dtos.request.UsuarioDTORequest;
+import equipo1obrasocial.dtos.response.UsuarioDTOResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Usuario;
@@ -32,5 +33,16 @@ public class UsuarioConverter {
         // Encriptar la contraseña
         usuario.setPassword(passwordService.hashPassword(dto.getPassword()));
         return usuario;
+    }
+    
+    public UsuarioDTOResponse converToModel(Usuario usuario) {
+    	
+    	UsuarioDTOResponse usuarioDto = new UsuarioDTOResponse();
+    	
+    	usuarioDto.setId(usuario.getId());
+    	usuarioDto.setEmail(usuario.getEmail());
+    	usuarioDto.setRolUsuario(usuario.getRolUsuario());
+    	
+    	return usuarioDto;
     }
 }

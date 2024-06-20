@@ -1,5 +1,7 @@
 package equipo1obrasocial.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +11,7 @@ import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
+import equipo1obrasocial.dtos.response.TurnoDTOResponse;
 import equipo1obrasocial.services.ITurnoService;
 import equipo1obrasocial.util.Mensaje;
 import io.swagger.annotations.Api;
@@ -18,9 +21,12 @@ import io.swagger.annotations.ApiResponses;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/turnos")
 @RequestScoped
@@ -121,6 +127,15 @@ public class TurnoController {
 
         	turnoService.eliminarTurno(dto);
             return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Se eliminó el turno exitosamente"));
+
+    }
+	
+    @GET
+    @Path("/traerTurnosActivosMedico/{idMedico}")
+    public Response getTurnosActivosByMedico(@PathParam("idMedico") long idMedico) {
+    	
+            List<TurnoDTOResponse> turnos = turnoService.traerTurnosActivosPorMedico(idMedico);
+            return Response.ok(turnos).build();
 
     }
 
