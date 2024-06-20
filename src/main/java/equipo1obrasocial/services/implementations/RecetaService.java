@@ -64,6 +64,13 @@ public class RecetaService implements IRecetaService {
 
 	@Override
 	@Transactional
+	/**
+	 * Este método trae la receta asignada a cada turno médico, mediante un identificador, que es el id del turno,
+	 * permite en la vista recibir los datos de la receta, como el id, nombre de la clinica, direccion, la especialidad medica,
+	 * la fecha, el diagnostico y el tratamiento, y el nombre completo del médico
+	 * @param el id del turno asociado a la receta
+	 * @return el dto de receta que trae los datos anteriormente mencionados
+	 */
 	public RecetaDTOResponse traerRecetaPorTurno(long idTurno) throws Exception{
 		
 		Receta receta = recetaRepository.findByTurnoId(idTurno);
