@@ -14,6 +14,5 @@ public class UsuarioDTORequest {
 	private String email;
 	private String password;
 	private String rolUsuario;
-	private String dni;
-	private String matricula;
+	private String identificador;
 }

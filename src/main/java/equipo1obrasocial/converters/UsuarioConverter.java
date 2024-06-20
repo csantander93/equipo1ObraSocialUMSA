@@ -4,24 +4,33 @@ import equipo1obrasocial.dtos.request.UsuarioDTORequest;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Usuario;
+import equipo1obrasocial.util.PasswordService;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
+@ApplicationScoped
 public class UsuarioConverter {
 
-    public static Usuario convertToEntity(UsuarioDTORequest dto, Medico medico) {
+    @Inject
+    private PasswordService passwordService;
+
+    public Usuario convertToEntity(UsuarioDTORequest dto, Medico medico) {
         Usuario usuario = new Usuario();
         usuario.setMedico(medico);
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword());
         usuario.setRolUsuario(dto.getRolUsuario());
+        // Encriptar la contraseña
+        usuario.setPassword(passwordService.hashPassword(dto.getPassword()));
         return usuario;
     }
 
-    public static Usuario convertToEntity(UsuarioDTORequest dto, Paciente paciente) {
+    public Usuario convertToEntity(UsuarioDTORequest dto, Paciente paciente) {
         Usuario usuario = new Usuario();
         usuario.setPaciente(paciente);
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword());
         usuario.setRolUsuario(dto.getRolUsuario());
+        // Encriptar la contraseña
+        usuario.setPassword(passwordService.hashPassword(dto.getPassword()));
         return usuario;
     }
 }

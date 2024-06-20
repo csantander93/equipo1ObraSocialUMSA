@@ -31,7 +31,7 @@ public class UsuarioController {
         @ApiResponse(code = 201, message = "Usuario creado exitosamente"),
         @ApiResponse(code = 400, message = "Error al crear el usuario")
         })
-    public ResponseEntity<Object> crearUsuario(@RequestBody UsuarioDTORequest dto){
+    public ResponseEntity<Object> crearUsuario(@RequestBody UsuarioDTORequest dto) throws Exception{
         	usuarioService.crearUsuario(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se creó el usuario exitosamente"));
     }

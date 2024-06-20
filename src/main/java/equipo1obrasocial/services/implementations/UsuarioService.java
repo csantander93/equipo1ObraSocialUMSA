@@ -29,52 +29,45 @@ public class UsuarioService implements IUsuarioService {
 	@Inject
 	private PacienteRepository pacienteRepository;
 	
+    @Inject
+    private UsuarioConverter usuarioConverter;
+	
 	@Override
 	@Transactional
-	public boolean crearUsuario(UsuarioDTORequest dto) {
-		
-		if(usuarioRepository.findByEmail(dto.getEmail()) != null) {
-			throw new UsuarioExisteException();
-		}
-		
-		if (!"Paciente".equals(dto.getRolUsuario()) && !"Medico".equals(dto.getRolUsuario())) {
-		    throw new RolNoExisteException();
-		}
+    public boolean crearUsuario(UsuarioDTORequest dto) throws Exception {
+        if (usuarioRepository.findByEmail(dto.getEmail()) != null) {
+            throw new UsuarioExisteException();
+        }
 
+        Usuario usuario;
+        if (dto.getRolUsuario().equals("Paciente")) {
+            Paciente paciente = pacienteRepository.findByDni(dto.getIdentificador());
 
-		if("Paciente".equals(dto.getRolUsuario())) {
-			
-			Paciente paciente = pacienteRepository.findByDni(dto.getDni());
-			
-			if(paciente == null) {
-				throw new PacienteNoExisteException();
-			}
-			
-			Usuario usuario = UsuarioConverter.convertToEntity(dto, paciente);
-			
-			paciente.setUsuario(usuario);
-			
-			pacienteRepository.persist(paciente);
-			usuarioRepository.persist(usuario);
-		}
-		
-		if("Medico".equals(dto.getRolUsuario())) {
-			
-			Medico medico = medicoRepository.findByMatricula(dto.getMatricula());
-			
-			if(medico == null) {
-				throw new MedicoNoExisteException();
-			}
-			
-			Usuario usuario = UsuarioConverter.convertToEntity(dto, medico);
-			
-			medico.setUsuario(usuario);
-			
-			medicoRepository.persist(medico);
-			usuarioRepository.persist(usuario);
-		}
-		
-		return true;
-	}
+            if (paciente == null) {
+                throw new PacienteNoExisteException();
+            }
+
+            usuario = usuarioConverter.convertToEntity(dto, paciente);
+            paciente.setUsuario(usuario);
+            pacienteRepository.persist(paciente);
+            usuarioRepository.persist(usuario);
+
+        } else if (dto.getRolUsuario().equals("Medico")) {
+            Medico medico = medicoRepository.findByMatricula(dto.getIdentificador());
+            if (medico == null) {
+                throw new MedicoNoExisteException();
+            }
+
+            usuario = usuarioConverter.convertToEntity(dto, medico);
+            medico.setUsuario(usuario);
+            medicoRepository.persist(medico);
+            usuarioRepository.persist(usuario);
+
+        } else {
+            throw new Exception("Rol de usuario no válido");
+        }
+
+        return true;
+    }
 
 }
