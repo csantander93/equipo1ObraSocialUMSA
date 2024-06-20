@@ -131,10 +131,10 @@ public class TurnoController {
     }
 	
     @GET
-    @Path("/traerTurnosActivosMedico/{idMedico}")
-    public Response getTurnosActivosByMedico(@PathParam("idMedico") long idMedico) {
+    @Path("/traerTurnosDisponiblesMedico/{idMedico}")
+    public Response traerTurnosDisponiblesMedico(@PathParam("idMedico") long idMedico) {
     	
-            List<TurnoDTOResponse> turnos = turnoService.traerTurnosActivosPorMedico(idMedico);
+            List<TurnoDTOResponse> turnos = turnoService.traerTurnosDisponiblesPorMedico(idMedico);
             return Response.ok(turnos).build();
 
     }

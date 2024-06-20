@@ -79,7 +79,7 @@ public class TurnoService implements ITurnoService {
 			throw new TurnoFueraDeHorarioException();
 		}
 		
-		Turno turno = TurnoConverter.convertToEntity(dto, medico, paciente);
+		Turno turno = turnoConverter.convertToEntity(dto, medico, paciente);
 		
 		turnoRepository.persist(turno);
         turno.setActivo(true);
@@ -120,7 +120,7 @@ public class TurnoService implements ITurnoService {
 			throw new TurnoFueraDeHorarioException();
 		}
 		
-		Turno turno = TurnoConverter.convertToEntity(dto, medico);
+		Turno turno = turnoConverter.convertToEntity(dto, medico);
 		turno.setActivo(false);
 		
 		turnoRepository.persist(turno);
@@ -177,7 +177,7 @@ public class TurnoService implements ITurnoService {
 	        }
 
 	        // Convertir el DTO a entidad de Turno y persistirlo
-	        Turno turno = TurnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
+	        Turno turno = turnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
 	        turno.setActivo(false);
 	        turnoRepository.persist(turno);
 
@@ -236,7 +236,7 @@ public class TurnoService implements ITurnoService {
 	        }
 
 	        // Convertir el DTO a entidad y persistirlo
-	        Turno turno = TurnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
+	        Turno turno = turnoConverter.convertToEntity(dto, medico, fechaHoraTurno);
 	        turno.setActivo(false);
 	        turnoRepository.persist(turno);
 
@@ -335,7 +335,7 @@ public class TurnoService implements ITurnoService {
 
 	@Override
 	@Transactional
-    public List<TurnoDTOResponse> traerTurnosActivosPorMedico(long idMedico) {
+    public List<TurnoDTOResponse> traerTurnosDisponiblesPorMedico(long idMedico) {
 		
 		if(medicoRepository.findById(idMedico) == null) {
 			throw new MedicoNoExisteException();

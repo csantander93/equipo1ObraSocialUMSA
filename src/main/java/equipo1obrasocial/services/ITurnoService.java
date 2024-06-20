@@ -18,5 +18,5 @@ public interface ITurnoService {
 	public boolean actualizarTurno(TurnoActualizarDTORequest dto) ;
 	public boolean eliminarTurno(TurnoEliminarDTORequest dto) ;
 	boolean darBajaTurno(TurnoEliminarDTORequest dto) ;
-	public List<TurnoDTOResponse> traerTurnosActivosPorMedico(long idMedico);
+	public List<TurnoDTOResponse> traerTurnosDisponiblesPorMedico(long idMedico);
 }

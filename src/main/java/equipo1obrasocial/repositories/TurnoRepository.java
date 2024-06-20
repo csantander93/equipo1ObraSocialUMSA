@@ -14,6 +14,6 @@ public class TurnoRepository implements PanacheRepository<Turno> {
     }
     
     public List<Turno> findByMedicoIdAndActivo(long medicoId) {
-        return list("medico.id = ?1 and activo = ?2", medicoId, true);
+        return list("medico.id = ?1 and activo = ?2", medicoId, false);
     }
 }
