@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOAsignarPaciente;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.dtos.response.TurnoDTOResponse;
+import equipo1obrasocial.dtos.response.TurnoDTOVistaResponse;
 import equipo1obrasocial.services.ITurnoService;
 import equipo1obrasocial.util.Mensaje;
 import io.swagger.annotations.Api;
@@ -138,5 +140,25 @@ public class TurnoController {
             return Response.ok(turnos).build();
 
     }
+    
+	@PUT
+	@Path("/asignarTurno")
+    @ApiOperation(value = "Asginar un turno existente disponible a un paciente", notes = "Asigna un turno  previamente disponible a un paciente")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Turno asignado exitosamente"),
+        @ApiResponse(code = 400, message = "Error al asignar el turno")
+    })
+    public ResponseEntity<Object> asignarTurno(@RequestBody TurnoDTOAsignarPaciente dto){
 
+        	turnoService.asignarTurno(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se asignó exitosamente"));
+	}
+
+	@GET
+	@Path("/traerTurnosPorIdUsuario/{idUsuario}")
+	public Response traerTurnosPorIdUsuario(@PathParam("idUsuario") long idUsuario) {
+		
+	        List<TurnoDTOVistaResponse> turnos = turnoService.traerTurnosPorIdUsuario(idUsuario);
+	        return Response.ok(turnos).build();
+	}
 }
