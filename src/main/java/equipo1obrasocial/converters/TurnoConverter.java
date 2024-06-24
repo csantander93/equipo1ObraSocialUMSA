@@ -6,6 +6,7 @@ import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.response.TurnoDTOResponse;
+import equipo1obrasocial.dtos.response.TurnoDTOVistaResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Turno;
@@ -45,5 +46,17 @@ public class TurnoConverter {
 
         return dto;
     }
-
+	
+	public static TurnoDTOVistaResponse convertToDTOVista (Turno turno) {
+		TurnoDTOVistaResponse dto = new TurnoDTOVistaResponse();
+		
+		dto.setIdTurno(turno.getId());
+		dto.setNombreMedico(turno.getMedico().getNombre()+" "+turno.getMedico().getApellido());
+		dto.setEspecialidadMedico(turno.getMedico().getEspecialidad().getNombreEspecialidad());
+		dto.setFechaHora(turno.getFecha_hora());
+		dto.setLugarAtencion(turno.getMedico().getClinica().getDireccion());
+		dto.setMotivoConsulta(turno.getMotivoConsulta());
+		
+		return dto;
+	}
 }

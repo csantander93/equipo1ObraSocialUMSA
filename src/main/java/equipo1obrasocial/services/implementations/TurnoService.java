@@ -7,22 +7,27 @@ import java.util.List;
 
 import equipo1.obrasocial.exceptions.HorarioNoDefinidoException;
 import equipo1.obrasocial.exceptions.MedicoNoExisteException;
+import equipo1.obrasocial.exceptions.PacienteNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoFueraDeHorarioException;
 import equipo1.obrasocial.exceptions.TurnoNoExisteException;
 import equipo1.obrasocial.exceptions.TurnoOcupadoException;
 import equipo1obrasocial.converters.TurnoConverter;
 import equipo1obrasocial.dtos.request.TurnoActualizarDTORequest;
+import equipo1obrasocial.dtos.request.TurnoDTOAsignarPaciente;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFecha;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoFechaHora;
 import equipo1obrasocial.dtos.request.TurnoDTOMedicoPaciente;
 import equipo1obrasocial.dtos.request.TurnoEliminarDTORequest;
 import equipo1obrasocial.dtos.response.TurnoDTOResponse;
+import equipo1obrasocial.dtos.response.TurnoDTOVistaResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Turno;
+import equipo1obrasocial.entities.Usuario;
 import equipo1obrasocial.repositories.MedicoRepository;
 import equipo1obrasocial.repositories.PacienteRepository;
 import equipo1obrasocial.repositories.TurnoRepository;
+import equipo1obrasocial.repositories.UsuarioRepository;
 import equipo1obrasocial.services.ITurnoService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -43,6 +48,9 @@ public class TurnoService implements ITurnoService {
 	
 	@Inject 
 	private TurnoConverter turnoConverter;
+	
+	@Inject
+	private UsuarioRepository usuarioRepository;
 	
 	@Override
 	@Transactional
@@ -345,6 +353,47 @@ public class TurnoService implements ITurnoService {
         List<TurnoDTOResponse> dtos = new ArrayList();
         for (Turno t : turnos) {
         	TurnoDTOResponse dto = turnoConverter.convertToDTO(t);
+        	dtos.add(dto);
+        }
+        return dtos;
+    }
+
+	@Override
+	@Transactional
+	public boolean asignarTurno(TurnoDTOAsignarPaciente dto) {
+        Turno turno = turnoRepository.findById(dto.getIdTurno());
+        Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
+        
+        if (turno == null) {
+            throw new TurnoNoExisteException();
+        }
+        
+        if (paciente == null) {
+        	throw new PacienteNoExisteException();
+        }
+
+        turno.setPaciente(paciente);
+        turno.setMotivoConsulta(dto.getMotivoConsulta());
+        turno.setActivo(true);
+        
+        turnoRepository.persist(turno);
+        
+        return true;
+	}
+
+	@Override
+	public List<TurnoDTOVistaResponse> traerTurnosPorIdUsuario(long idUsuario) {
+	
+		Usuario usuario = usuarioRepository.findById(idUsuario);
+		
+		if(pacienteRepository.findById(usuario.getPaciente().getId()) == null) {
+			throw new PacienteNoExisteException();
+		}
+		
+        List<Turno> turnos = turnoRepository.findByPacienteIdAndActivo(usuario.getPaciente().getId());
+        List<TurnoDTOVistaResponse> dtos = new ArrayList();
+        for (Turno t : turnos) {
+        	TurnoDTOVistaResponse dto = turnoConverter.convertToDTOVista(t);
         	dtos.add(dto);
         }
         return dtos;
