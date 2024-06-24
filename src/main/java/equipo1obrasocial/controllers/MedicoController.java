@@ -40,12 +40,12 @@ public class MedicoController {
         @ApiResponse(code = 200, message = "Cartilla de médicos obtenida exitosamente"),
         @ApiResponse(code = 400, message = "Error al obtener la cartilla de médicos")
     })
-    public ResponseEntity<Object> obtenerCartillaDeMedicos() {
+    public Response obtenerCartillaDeMedicos() {
         try {
             List<MedicoDTOResponse> medicos = medicoService.getCartilla();
-            return ResponseEntity.status(HttpStatus.OK).body(medicos);
+            return Response.ok(medicos).build();
         } catch (Exception e) {
-            return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return Response.status(Response.Status.BAD_REQUEST).entity(new Mensaje(e.getMessage())).build();
         }
     }
 
