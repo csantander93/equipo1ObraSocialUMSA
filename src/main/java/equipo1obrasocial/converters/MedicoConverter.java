@@ -5,7 +5,9 @@ import java.util.List;
 
 import equipo1obrasocial.dtos.response.MedicoDTOResponse;
 import equipo1obrasocial.entities.Medico;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class MedicoConverter {
 
     public static MedicoDTOResponse convertToDTO(Medico medico) {

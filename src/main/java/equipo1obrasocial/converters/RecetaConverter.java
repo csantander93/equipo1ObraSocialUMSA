@@ -6,8 +6,9 @@ import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Receta;
 import equipo1obrasocial.entities.Turno;
+import jakarta.enterprise.context.ApplicationScoped;
 
-
+@ApplicationScoped
 public class RecetaConverter {
 
     public static Receta convertToEntity(RecetaDTORequest dto, Medico medico, Paciente paciente, Turno turno) {

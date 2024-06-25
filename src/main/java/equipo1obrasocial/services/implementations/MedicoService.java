@@ -1,9 +1,9 @@
 package equipo1obrasocial.services.implementations;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
+import equipo1.obrasocial.exceptions.EspecialidadSinMedicosException;
 import equipo1obrasocial.converters.MedicoConverter;
 import equipo1obrasocial.dtos.response.MedicoDTOResponse;
 import equipo1obrasocial.entities.Clinica;
@@ -28,6 +28,9 @@ public class MedicoService implements IMedicoService {
 	
 	@Inject
 	private ClinicaRepository clinicaRepository;
+	
+	@Inject 
+	private MedicoConverter medicoConverter;
 
 	@Override
 	@Transactional
@@ -90,6 +93,19 @@ public class MedicoService implements IMedicoService {
             throw new Exception("No hay médicos que mostrar.");
         }
 
-        return MedicoConverter.convertToDTOList(medicos);
+        return medicoConverter.convertToDTOList(medicos);
     }
+
+	@Override
+	public List<MedicoDTOResponse> traerMedicosPorIdEspecialidad(long idEspecialidad) {
+		
+		List<Medico> medicos = medicoRepository.findMedicosByEspecialidadId(idEspecialidad);
+		
+		if(medicos == null || medicos.isEmpty()) {
+			throw new EspecialidadSinMedicosException();
+		}
+		
+		
+		return medicoConverter.convertToDTOList(medicos);
+	}
 }

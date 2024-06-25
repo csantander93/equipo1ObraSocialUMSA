@@ -48,6 +48,19 @@ public class MedicoController {
             return Response.status(Response.Status.BAD_REQUEST).entity(new Mensaje(e.getMessage())).build();
         }
     }
+    
+    @GET
+    @Path("/traerMedicosIdEspecialidad/{idEspecialidad}")
+    @ApiOperation(value = "Obtener de médico por id especialidad", notes = "trae una lista de medicos para la especialidad indicada por parametro")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Médicos obtenidos exitosamente"),
+        @ApiResponse(code = 400, message = "No existen medicos para la especialidad indicada por id")
+    })
+    public Response obtenerMedicosPorIdEspecialidad(@PathParam("idEspecialidad") long idEspecialidad) {
+
+            List<MedicoDTOResponse> medicos = medicoService.traerMedicosPorIdEspecialidad(idEspecialidad);
+            return Response.ok(medicos).build();
+    }
 
     @POST
     @Path("/crearMedico/{nombre}/{apellido}/{matricula}/{atencionDesde}/{atencionHasta}/{especialidad}/{idClinica}")
