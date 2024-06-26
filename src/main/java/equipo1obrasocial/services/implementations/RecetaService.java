@@ -78,5 +78,14 @@ public class RecetaService implements IRecetaService {
 		return RecetaConverter.convertToDTO(receta);
 	}
 
+	@Override
+	public RecetaDTOResponse traerRecetaPorIDReceta(long idReceta) {
+
+		Receta receta = recetaRepository.findById(idReceta);
+		
+		return RecetaConverter.convertToDTO(receta);
+
+	}
+
 	
 }

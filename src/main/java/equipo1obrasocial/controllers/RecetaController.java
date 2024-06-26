@@ -17,6 +17,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.core.Response;
 
 @Path("/recetas")
 @RequestScoped
@@ -56,5 +57,18 @@ public class RecetaController {
         } catch (Exception e) {
             return new ResponseEntity<>(new Mensaje(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
+    }
+    
+    @GET
+    @Path("/traerRecetaId/{id}")
+    @ApiOperation(value = "Obtener receta por id", notes = "Obtiene la receta por Id")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "Receta obtenida exitosamente"),
+        @ApiResponse(code = 400, message = "Error al obtener la receta")
+    })
+    public Response traerRecetaPorId(@PathParam("id") long id) {
+
+            RecetaDTOResponse dto = recetaService.traerRecetaPorIDReceta(id);
+            return Response.ok(dto).build();
     }
 }

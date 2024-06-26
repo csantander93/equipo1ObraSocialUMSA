@@ -14,6 +14,7 @@ import lombok.Setter;
 public class TurnoDTOVistaResponse {
 
 	private long idTurno;
+	private long idReceta;
 	private String nombreMedico;
 	private String especialidadMedico;
 	private String lugarAtencion;
