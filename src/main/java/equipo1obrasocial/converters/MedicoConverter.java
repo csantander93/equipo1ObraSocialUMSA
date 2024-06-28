@@ -14,6 +14,7 @@ public class MedicoConverter {
         MedicoDTOResponse dto = new MedicoDTOResponse();
         
         String nombreMedico = medico.getNombre().concat(" " + medico.getApellido());
+        dto.setIdMedico(medico.getId());
         dto.setNombreMedico(nombreMedico);
         dto.setNombreEspecialidad(medico.getEspecialidad().getNombreEspecialidad());
         dto.setUbicacionConsulta(medico.getClinica().getDireccion());

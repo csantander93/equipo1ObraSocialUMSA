@@ -11,6 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicoDTOResponse {
+	
+	private long idMedico;
 
 	private String nombreMedico;
 	
