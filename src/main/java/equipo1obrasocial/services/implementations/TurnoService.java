@@ -362,7 +362,8 @@ public class TurnoService implements ITurnoService {
 	@Transactional
 	public boolean asignarTurno(TurnoDTOAsignarPaciente dto) {
         Turno turno = turnoRepository.findById(dto.getIdTurno());
-        Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
+        Usuario usuario = usuarioRepository.findById(dto.getIdUsuario());
+        Paciente paciente = usuario.getPaciente();
         
         if (turno == null) {
             throw new TurnoNoExisteException();

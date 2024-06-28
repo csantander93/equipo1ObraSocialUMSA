@@ -12,7 +12,7 @@ import lombok.Setter;
 public class TurnoDTOAsignarPaciente {
 
 	private long idTurno;
-	private long idPaciente;
+	private long idUsuario;
 	private String motivoConsulta;
 	
 }
