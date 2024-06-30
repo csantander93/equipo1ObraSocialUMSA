@@ -141,18 +141,18 @@ public class TurnoController {
 
     }
     
-	@PUT
+    @PUT
 	@Path("/asignarTurno")
     @ApiOperation(value = "Asginar un turno existente disponible a un paciente", notes = "Asigna un turno  previamente disponible a un paciente")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Turno asignado exitosamente"),
         @ApiResponse(code = 400, message = "Error al asignar el turno")
     })
-    public ResponseEntity<Object> asignarTurno(@RequestBody TurnoDTOAsignarPaciente dto){
+    public Response asignarTurno(@RequestBody TurnoDTOAsignarPaciente dto){
 
         	turnoService.asignarTurno(dto);
-            return ResponseEntity.status(HttpStatus.OK).body(new Mensaje("Su turno se asignó exitosamente"));
-	}
+            return Response.status(Response.Status.CREATED).entity("Su turno se asignó correctamente").build(); 
+	} 
 
 	@GET
 	@Path("/traerTurnosPorIdUsuario/{idUsuario}")
