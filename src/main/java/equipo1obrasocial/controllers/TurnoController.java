@@ -141,7 +141,7 @@ public class TurnoController {
 
     }
     
-	@PUT
+    @PUT
 	@Path("/asignarTurno")
     @ApiOperation(value = "Asginar un turno existente disponible a un paciente", notes = "Asigna un turno  previamente disponible a un paciente")
     @ApiResponses({
@@ -152,7 +152,11 @@ public class TurnoController {
 
         	turnoService.asignarTurno(dto);
             return Response.status(Response.Status.CREATED).entity("Su turno se asignó correctamente").build(); 
+<<<<<<< HEAD
 	}
+=======
+	} 
+>>>>>>> rama_cris
 
 	@GET
 	@Path("/traerTurnosPorIdUsuario/{idUsuario}")
