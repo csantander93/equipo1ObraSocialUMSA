@@ -54,6 +54,7 @@ public class TurnoConverter {
 		if(turno.getReceta() != null) {
 			dto.setIdReceta(turno.getReceta().getId());
 		}
+		dto.setNombrePaciente(turno.getPaciente().getNombre()+" "+turno.getPaciente().getApellido());
 		dto.setNombreMedico(turno.getMedico().getNombre()+" "+turno.getMedico().getApellido());
 		dto.setEspecialidadMedico(turno.getMedico().getEspecialidad().getNombreEspecialidad());
 		dto.setFechaHora(turno.getFecha_hora());

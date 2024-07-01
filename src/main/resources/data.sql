@@ -147,7 +147,7 @@ INSERT INTO turno (id_turno, activo, fecha_hora, motivoConsulta, id_medico, id_p
 (100, false, '2024-07-10 20:00:00', NULL, 10, NULL);
 
 
--- Crando una receta medica para el primer paciente
+-- Creando una receta medica para el primer paciente
 INSERT INTO receta (fecha, id_medico, id_paciente, id_turno, clinica, diagnostico, tratamiento) VALUES
 ('2024-07-01', 1, 1, 1, 'Clinica Almedin', 'Diagnóstico ejemplo', 'Tratamiento ejemplo');
 
