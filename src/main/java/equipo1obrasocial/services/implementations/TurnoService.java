@@ -151,11 +151,6 @@ public class TurnoService implements ITurnoService {
 	@Override
 	@Transactional
 	public boolean crearTurnosMedicoFechaCada15Min(TurnoDTOMedicoFecha dto) {
-<<<<<<< HEAD
-	    
-=======
-	 
->>>>>>> rama_cris
 		Usuario usuario = usuarioRepository.findById(dto.getIdUsuario());
 		
 		if(usuario.getMedico() == null) {
@@ -216,11 +211,6 @@ public class TurnoService implements ITurnoService {
 	 *                                    Esto impide determinar el rango de horas válidas para la creación de turnos.
 	 */
 	public boolean crearTurnosMedicoFechaCada20Min(TurnoDTOMedicoFecha dto) {
-<<<<<<< HEAD
-	    
-=======
-	    // Obtener el médico por ID
->>>>>>> rama_cris
 		Usuario usuario = usuarioRepository.findById(dto.getIdUsuario());
 		
 		if(usuario.getMedico() == null) {
