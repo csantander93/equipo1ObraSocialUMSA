@@ -424,11 +424,11 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada20MinExitoso() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(medico);
 
         // Ejecutar el método bajo prueba
         boolean resultado = turnoService.crearTurnosMedicoFechaCada20Min(dto);
@@ -461,11 +461,11 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada20MinMedicoNoExiste() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(null);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(null);
 
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(MedicoNoExisteException.class, () -> {
@@ -477,7 +477,7 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada20MinHorarioNoDefinido() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Medico sin horarios definidos
@@ -485,7 +485,7 @@ public class TurnoServiceTest {
         medico.setAtencionHasta(null);
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(medico);
 
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(HorarioNoDefinidoException.class, () -> {
@@ -497,11 +497,11 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada15MinExitoso() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(medico);
 
         // Ejecutar el método bajo prueba
         boolean resultado = turnoService.crearTurnosMedicoFechaCada15Min(dto);
@@ -534,11 +534,11 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada15MinMedicoNoExiste() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(null);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(null);
 
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(MedicoNoExisteException.class, () -> {
@@ -550,7 +550,7 @@ public class TurnoServiceTest {
     public void testCrearTurnosMedicoFechaCada15MinHorarioNoDefinido() {
         // Datos de prueba
         TurnoDTOMedicoFecha dto = new TurnoDTOMedicoFecha();
-        dto.setIdMedico(1L);
+        dto.setIdUsuario(1L);
         dto.setFecha(LocalDate.of(2023, 6, 15));
 
         // Medico sin horarios definidos
@@ -558,7 +558,7 @@ public class TurnoServiceTest {
         medico.setAtencionHasta(null);
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
+        when(medicoRepository.findById(dto.getIdUsuario())).thenReturn(medico);
 
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(HorarioNoDefinidoException.class, () -> {
