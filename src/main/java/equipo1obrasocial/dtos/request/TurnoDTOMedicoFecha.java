@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TurnoDTOMedicoFecha {
 	
-	private long idMedico;
+	private long idUsuario;
 	private LocalDate fecha;
 
 }
