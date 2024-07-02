@@ -388,21 +388,34 @@ public class TurnoService implements ITurnoService {
 
 	@Override
 	public List<TurnoDTOVistaResponse> traerTurnosPorIdUsuario(long idUsuario) {
-	
-		Usuario usuario = usuarioRepository.findById(idUsuario);
-		
-		if(pacienteRepository.findById(usuario.getPaciente().getId()) == null) {
-			throw new PacienteNoExisteException();
-		}
-		
-        List<Turno> turnos = turnoRepository.findByPacienteIdAndActivo(usuario.getPaciente().getId());
-        List<TurnoDTOVistaResponse> dtos = new ArrayList();
-        for (Turno t : turnos) {
-        	TurnoDTOVistaResponse dto = turnoConverter.convertToDTOVista(t);
-        	dtos.add(dto);
-        }
-        return dtos;
-    }
+	    Usuario usuario = usuarioRepository.findById(idUsuario);
+	    
+	    List<Turno> turnos = new ArrayList<>();
+
+	    if (usuario.getPaciente() != null) {
+	        Paciente paciente = usuario.getPaciente();
+	        Paciente pacienteExistente = pacienteRepository.findById(paciente.getId());
+	        if (pacienteExistente == null) {
+	            throw new PacienteNoExisteException();
+	        }
+	        turnos = turnoRepository.findByPacienteIdAndActivo(paciente.getId());
+	    } else if (usuario.getMedico() != null) {
+	        Medico medico = usuario.getMedico();
+	        Medico medicoExistente = medicoRepository.findById(medico.getId());
+	        if (medicoExistente == null) {
+	            throw new MedicoNoExisteException();
+	        }
+	        turnos = turnoRepository.findByMedicoIdAndActivoUser(medico.getId());
+	    }
+
+	    List<TurnoDTOVistaResponse> dtos = new ArrayList<>();
+	    for (Turno turno : turnos) {
+	        TurnoDTOVistaResponse dto = turnoConverter.convertToDTOVista(turno);
+	        dtos.add(dto);
+	    }
+	    return dtos;
+	}
+
 	
 }
 

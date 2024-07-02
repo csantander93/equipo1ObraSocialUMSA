@@ -152,8 +152,8 @@ public class TurnoController {
 
         	turnoService.asignarTurno(dto);
             return Response.status(Response.Status.CREATED).entity("Su turno se asignó correctamente").build(); 
-	} 
-
+	}
+	
 	@GET
 	@Path("/traerTurnosPorIdUsuario/{idUsuario}")
 	public Response traerTurnosPorIdUsuario(@PathParam("idUsuario") long idUsuario) {

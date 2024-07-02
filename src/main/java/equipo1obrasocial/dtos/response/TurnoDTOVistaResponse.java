@@ -15,6 +15,7 @@ public class TurnoDTOVistaResponse {
 
 	private long idTurno;
 	private long idReceta;
+	private long idPaciente;
 	private String nombrePaciente;
 	private String nombreMedico;
 	private String especialidadMedico;
