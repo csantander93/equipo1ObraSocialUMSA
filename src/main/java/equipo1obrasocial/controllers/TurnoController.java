@@ -83,10 +83,12 @@ public class TurnoController {
         @ApiResponse(code = 201, message = "Turnos creados exitosamente"),
         @ApiResponse(code = 400, message = "Error al crear el turnos para ese dia")
         })
-    public ResponseEntity<Object> altaTurnosMedicoFechaC20Min(@RequestBody TurnoDTOMedicoFecha dto){
+    public Response altaTurnosMedicoFechaC20Min(@RequestBody TurnoDTOMedicoFecha dto){
 
         	turnoService.crearTurnosMedicoFechaCada20Min(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se agregaron los turnos exitosamente para el dia "+dto.getFecha()));
+        	return Response.status(Response.Status.CREATED)
+                    .entity("Se agregaron los turnos exitosamente para el dia " + dto.getFecha())
+                    .build();        	
     }
 	
 	@DELETE
@@ -151,7 +153,7 @@ public class TurnoController {
     public Response asignarTurno(@RequestBody TurnoDTOAsignarPaciente dto){
 
         	turnoService.asignarTurno(dto);
-            return Response.status(Response.Status.CREATED).entity("Su turno se asignó correctamente").build(); 
+            return Response.status(Response.Status.OK).entity("Su turno se asignó correctamente").build(); 
 	}
 	
 	@GET
