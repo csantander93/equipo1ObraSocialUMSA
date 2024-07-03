@@ -16,7 +16,7 @@ public class RecetaDTORequest {
 	private String diagnostico;
 	private LocalDate fecha;
 	private String tratamiento;
-	private long idMedico;
+	private long idUsuario;
 	private long idPaciente;
 	private long idTurno;
 }

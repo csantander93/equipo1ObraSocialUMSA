@@ -7,10 +7,12 @@ import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Receta;
 import equipo1obrasocial.entities.Turno;
+import equipo1obrasocial.entities.Usuario;
 import equipo1obrasocial.repositories.MedicoRepository;
 import equipo1obrasocial.repositories.PacienteRepository;
 import equipo1obrasocial.repositories.RecetaRepository;
 import equipo1obrasocial.repositories.TurnoRepository;
+import equipo1obrasocial.repositories.UsuarioRepository;
 import equipo1obrasocial.services.IRecetaService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -31,11 +33,16 @@ public class RecetaService implements IRecetaService {
 	@Inject
 	private PacienteRepository pacienteRepository;
 	
+	@Inject
+	private UsuarioRepository usuarioRepository;
+	
 	@Override
 	@Transactional
 	public boolean crearReceta(RecetaDTORequest dto) throws Exception {
+		
+		Usuario usuario = usuarioRepository.findById(dto.getIdUsuario());
 
-		Medico medico = medicoRepository.findById(dto.getIdMedico());
+		Medico medico = medicoRepository.findById(usuario.getMedico().getId());
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
 		Turno turno = turnoRepository.findById(dto.getIdTurno());
 		
@@ -44,7 +51,7 @@ public class RecetaService implements IRecetaService {
 		}
 		
 		if(medico == null) {
-			throw new Exception("El medico de id " + dto.getIdMedico() + " no existe.");
+			throw new Exception("El medico no existe.");
 		}
 		
 		if(turno == null) {
