@@ -15,7 +15,6 @@ public class TurnoActualizarDTORequest {
 	
 	private long idTurno;
 	private LocalDateTime fechaHoraNueva;
-	private long idMedicoNuevo;
 	private String nuevoMotivoConsulta;
 
 }

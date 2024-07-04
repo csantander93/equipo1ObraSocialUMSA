@@ -332,32 +332,13 @@ public class TurnoService implements ITurnoService {
 		 * @throws TurnoFueraDeHorarioException si se quiere asignarle un turno a un medico, pero este es pretendido fuera de sus rangos horarios.
 		 */
 	 public boolean actualizarTurno(TurnoActualizarDTORequest dto) {
+		 
 	        Turno turno = turnoRepository.findById(dto.getIdTurno());
 	        
 	        if (turno == null) {
 	            throw new TurnoNoExisteException();
 	        }
 
-	        Medico medicoNuevo = medicoRepository.findById(dto.getIdMedicoNuevo());
-	        if (medicoNuevo == null) {
-	            throw new MedicoNoExisteException();
-	        }
-
-	        LocalTime horaNuevaTurno = dto.getFechaHoraNueva().toLocalTime();
-
-	        if ((horaNuevaTurno.isAfter(medicoNuevo.getAtencionDesde()) || horaNuevaTurno.equals(medicoNuevo.getAtencionHasta())) &&
-	            (horaNuevaTurno.isBefore(medicoNuevo.getAtencionHasta()) || horaNuevaTurno.equals(medicoNuevo.getAtencionHasta()))) {
-
-	            for (Turno t : medicoNuevo.getTurnos()) {
-	                if (t.getFecha_hora().equals(dto.getFechaHoraNueva())) {
-	                    throw new TurnoOcupadoException();
-	                }
-	            }    
-	        } else {
-	            throw new TurnoFueraDeHorarioException();
-	        }
-
-	        turno.setMedico(medicoNuevo);
 	        turno.setFecha_hora(dto.getFechaHoraNueva());
 	        turno.setMotivoConsulta(dto.getNuevoMotivoConsulta());
 	        

@@ -51,8 +51,16 @@ public class TurnoConverter {
 		TurnoDTOVistaResponse dto = new TurnoDTOVistaResponse();
 		
 		dto.setIdTurno(turno.getId());
+		
 		if(turno.getReceta() != null) {
 			dto.setIdReceta(turno.getReceta().getId());
+		}
+		
+		if(turno.getMedico() != null) {
+				dto.setIdMedico(turno.getMedico().getId());
+
+		}else {
+			dto.setIdMedico(0);
 		}
 		dto.setIdPaciente(turno.getPaciente().getId());
 		dto.setNombrePaciente(turno.getPaciente().getNombre()+" "+turno.getPaciente().getApellido());
