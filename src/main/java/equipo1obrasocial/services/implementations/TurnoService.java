@@ -70,7 +70,13 @@ public class TurnoService implements ITurnoService {
 	 */
 	public boolean crearTurnoConPaciente(TurnoDTOMedicoPaciente dto) {
 		
-		Medico medico = medicoRepository.findById(dto.getIdMedico());
+		Usuario usuario = usuarioRepository.findById(dto.getIdUsuario());
+		Medico medico = new Medico();
+		
+		if(usuario.getMedico() != null) {
+			medico = medicoRepository.findById(usuario.getMedico().getId());
+		}
+		
 		Paciente paciente = pacienteRepository.findById(dto.getIdPaciente());
 		
 		LocalTime horaDelTurno = dto.getFecha_hora().toLocalTime();

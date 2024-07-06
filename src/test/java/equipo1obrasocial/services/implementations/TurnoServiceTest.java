@@ -71,12 +71,10 @@ public class TurnoServiceTest {
     public void testCrearTurnoConPacienteExitoso() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
-        dto.setIdMedico(1L);
         dto.setIdPaciente(1L);
         dto.setFecha_hora(LocalDateTime.of(2023, 6, 15, 10, 0));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
         when(pacienteRepository.findById(dto.getIdPaciente())).thenReturn(paciente);
         
         boolean resultado = turnoService.crearTurnoConPaciente(dto);
@@ -94,7 +92,6 @@ public class TurnoServiceTest {
     public void testCrearTurnoConPacienteTurnoOcupado() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
-        dto.setIdMedico(1L);
         dto.setIdPaciente(1L);
         dto.setFecha_hora(LocalDateTime.of(2023, 6, 15, 10, 0));
 
@@ -104,7 +101,6 @@ public class TurnoServiceTest {
         medico.setTurnos(new java.util.HashSet<>(java.util.Collections.singletonList(turnoExistente)));
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
 
         // Ejecutar el método bajo prueba y verificar la excepción
         assertThrows(TurnoOcupadoException.class, () -> {
@@ -117,12 +113,10 @@ public class TurnoServiceTest {
     public void testCrearTurnoConPacienteFueraDeHorario() {
         // Datos de prueba
         TurnoDTOMedicoPaciente dto = new TurnoDTOMedicoPaciente();
-        dto.setIdMedico(1L);
         dto.setIdPaciente(1L);
         dto.setFecha_hora(LocalDateTime.of(2023, 6, 15, 7, 0)); // Hora fuera del horario de atención
 
         // Mockear comportamientos
-        when(medicoRepository.findById(dto.getIdMedico())).thenReturn(medico);
 
         assertThrows(TurnoFueraDeHorarioException.class, () -> {
             turnoService.crearTurnoConPaciente(dto);
