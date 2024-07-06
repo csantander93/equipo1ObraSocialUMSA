@@ -1,5 +1,7 @@
 package equipo1obrasocial.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import equipo1obrasocial.dtos.request.UsuarioDTOLogin;
 import equipo1obrasocial.dtos.request.UsuarioDTORequest;
 import equipo1obrasocial.dtos.response.UsuarioDTOResponse;
+import equipo1obrasocial.dtos.response.UsuarioPacienteDTOResponse;
 import equipo1obrasocial.services.IUsuarioService;
 import equipo1obrasocial.util.Mensaje;
 import io.swagger.annotations.Api;
@@ -15,6 +18,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
@@ -49,4 +53,11 @@ public class UsuarioController {
             return Response.ok(response).build();
 
     }
+	
+	@GET
+	@Path("/traerUsuariosPaciente")
+	public Response traerUsuariosPaciente() {
+		List<UsuarioPacienteDTOResponse> pacientes = usuarioService.traerUsuariosPacientes();
+		return Response.ok(pacientes).build();
+	}
 }

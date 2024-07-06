@@ -2,6 +2,7 @@ package equipo1obrasocial.converters;
 
 import equipo1obrasocial.dtos.request.UsuarioDTORequest;
 import equipo1obrasocial.dtos.response.UsuarioDTOResponse;
+import equipo1obrasocial.dtos.response.UsuarioPacienteDTOResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Usuario;
@@ -44,5 +45,21 @@ public class UsuarioConverter {
     	usuarioDto.setRolUsuario(usuario.getRolUsuario());
     	
     	return usuarioDto;
+    }
+    
+    public UsuarioPacienteDTOResponse convertToModel(Usuario u) {
+    	
+    	UsuarioPacienteDTOResponse usuarioPDto = new UsuarioPacienteDTOResponse();
+    	
+    	usuarioPDto.setIdUsuario(u.getId());
+    	
+    	if(u.getPaciente() != null) {
+    		usuarioPDto.setIdPaciente(u.getPaciente().getId());
+    		usuarioPDto.setNombreCompleto(u.getPaciente().getNombre()+" "+u.getPaciente().getApellido());
+    		usuarioPDto.setDni(u.getPaciente().getDni());
+    		usuarioPDto.setNumAfiliado(u.getPaciente().getNum_afiliado());
+    	}
+    	
+    	return usuarioPDto;
     }
 }

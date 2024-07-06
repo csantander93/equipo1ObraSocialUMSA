@@ -1,5 +1,8 @@
 package equipo1obrasocial.services.implementations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import equipo1.obrasocial.exceptions.MedicoNoExisteException;
 import equipo1.obrasocial.exceptions.MedicoRegistradoConMailException;
 import equipo1.obrasocial.exceptions.PacienteNoExisteException;
@@ -11,6 +14,7 @@ import equipo1obrasocial.converters.UsuarioConverter;
 import equipo1obrasocial.dtos.request.UsuarioDTOLogin;
 import equipo1obrasocial.dtos.request.UsuarioDTORequest;
 import equipo1obrasocial.dtos.response.UsuarioDTOResponse;
+import equipo1obrasocial.dtos.response.UsuarioPacienteDTOResponse;
 import equipo1obrasocial.entities.Medico;
 import equipo1obrasocial.entities.Paciente;
 import equipo1obrasocial.entities.Usuario;
@@ -117,6 +121,19 @@ public class UsuarioService implements IUsuarioService {
         }
 		
 		return usuarioConverter.converToModel(usuarioEnt);
+	}
+
+	@Override
+	public List<UsuarioPacienteDTOResponse> traerUsuariosPacientes() {
+		
+		List<Usuario> usuarios = usuarioRepository.findAllPacientes();
+		List<UsuarioPacienteDTOResponse> usuariosPaciente = new ArrayList();
+		
+		for (Usuario u : usuarios) {
+			usuariosPaciente.add(usuarioConverter.convertToModel(u));
+		}
+		
+		return usuariosPaciente;
 	}
 
 }
